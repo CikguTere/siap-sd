@@ -107,7 +107,19 @@
         <h2 class="text-2xl md:text-4xl font-black text-slate-800 mb-2">Halo, <span class="ui-siswa-name"></span>!</h2>
         <p class="text-base md:text-xl text-slate-500 font-bold mb-6 md:mb-8">Siap untuk ujian hari ini?</p>
         <div class="bg-slate-50 rounded-3xl p-4 md:p-6 mb-6 md:mb-8 border border-slate-200">
-          <h3 id="ui-siswa-mapel" class="text-xl md:text-2xl font-black text-primary mb-1">-</h3>
+          <h3 id="ui-siswa-mapel" class="text-xl md:text-2xl font-black text-primary mb-4">-</h3>
+          <div class="mb-4 text-left">
+            <label class="block text-slate-700 font-bold mb-2 text-sm md:text-base">Pilih Mata Pelajaran:</label>
+            <select id="siswa-select-mapel" class="w-full bg-white border-2 border-slate-200 p-2 md:p-3 rounded-xl font-bold focus:border-primary outline-none text-sm md:text-base text-primary cursor-pointer">
+              <option value="Pendidikan Agama Katolik dan Budi Pekerti">Pendidikan Agama Katolik dan Budi Pekerti</option>
+              <option value="Pendidikan Pancasila">Pendidikan Pancasila</option>
+              <option value="Bahasa Indonesia">Bahasa Indonesia</option>
+              <option value="Matematika">Matematika</option>
+              <option value="IPAS">IPAS</option>
+              <option value="Seni Teater">Seni Teater</option>
+              <option value="PJOK">PJOK</option>
+            </select>
+          </div>
           <p class="text-slate-500 font-bold mb-4 uppercase tracking-widest text-xs md:text-sm">Paket: <span id="ui-siswa-paket"></span></p>
           <div class="flex flex-col sm:flex-row justify-center gap-3 md:gap-6 text-slate-600 font-bold text-sm md:text-base">
             <span class="bg-white px-4 py-2 rounded-xl shadow-sm w-full sm:w-auto"><i class="fas fa-clock text-warning"></i> <span id="ui-siswa-durasi"></span> Menit</span>
@@ -280,7 +292,14 @@
         <div id="admin-tab-ujian" class="admin-tab-content hidden fade-in-up">
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
             <div class="bg-white rounded-2xl md:rounded-3xl shadow-sm p-6 md:p-12 text-center border border-slate-100"><div class="w-16 h-16 md:w-20 md:h-20 bg-primary/10 text-primary rounded-full flex justify-center items-center mx-auto mb-4 md:mb-6"><i class="fas fa-ticket-alt text-3xl md:text-4xl"></i></div><h3 class="text-xl md:text-2xl font-black mb-2 text-slate-800">Token Ujian Aktif</h3><p class="text-slate-500 font-bold mb-6 md:mb-8 text-sm md:text-base">Berikan token ini kepada siswa agar bisa login.</p><div id="admin-ujian-token-display" class="text-5xl md:text-7xl font-black tracking-[0.2em] text-primary bg-primary/5 py-6 md:py-8 rounded-[2rem] border-4 border-primary/20 mb-6 md:mb-8 select-all"></div><div class="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center"><button onclick="generateToken()" class="btn-pro bg-white border-2 border-slate-200 text-slate-600 px-4 md:px-6 py-3 rounded-2xl font-extrabold hover:border-primary hover:text-primary w-full sm:w-auto text-sm md:text-base"><i class="fas fa-sync"></i> Acak Token</button><button onclick="saveAdminUjian(true)" class="btn-pro bg-success text-white px-4 md:px-6 py-3 rounded-2xl font-extrabold shadow-md w-full sm:w-auto text-sm md:text-base"><i class="fas fa-broadcast-tower"></i> Rilis Sekarang</button></div></div>
-            <div class="bg-white rounded-2xl md:rounded-3xl shadow-sm p-4 md:p-6 border border-slate-100"><h3 class="text-lg md:text-xl font-black mb-4 md:mb-6 text-slate-800"><i class="fas fa-sliders-h text-primary mr-2"></i> Parameter Ujian</h3><form onsubmit="saveAdminUjian(false); return false;" class="space-y-4 md:space-y-6"><div><label class="block text-slate-700 font-extrabold mb-2 text-sm md:text-base">Paket Soal Aktif</label><select id="inp-ujian-paket" class="w-full bg-slate-50 border-2 border-slate-200 p-3 md:p-4 rounded-xl md:rounded-2xl font-bold focus:border-primary outline-none text-sm md:text-base"><option value="Tryout">Paket Tryout (40 Soal)</option><option value="Ujian">Paket Ujian (40 Soal)</option></select><p class="text-[10px] md:text-xs text-slate-500 mt-2 font-bold">*Siswa hanya akan mengerjakan soal dari paket ini.</p></div><div><label class="block text-slate-700 font-extrabold mb-2 text-sm md:text-base">Nama Ujian / Mapel</label><input type="text" id="inp-ujian-mapel" class="w-full bg-slate-50 border-2 border-slate-200 p-3 md:p-4 rounded-xl md:rounded-2xl font-bold focus:border-primary outline-none text-sm md:text-base" required /></div><div class="grid grid-cols-1 sm:grid-cols-2 gap-4"><div><label class="block text-slate-700 font-extrabold mb-2 text-sm md:text-base">Durasi (Menit)</label><input type="number" id="inp-ujian-durasi" class="w-full bg-slate-50 border-2 border-slate-200 p-3 md:p-4 rounded-xl md:rounded-2xl font-bold focus:border-primary outline-none text-sm md:text-base" required /></div><div><label class="block text-slate-700 font-extrabold mb-2 text-sm md:text-base">Jadwal Ujian</label><input type="date" id="inp-ujian-jadwal" class="w-full bg-slate-50 border-2 border-slate-200 p-3 md:p-4 rounded-xl md:rounded-2xl font-bold focus:border-primary outline-none text-sm md:text-base" required /></div></div><div class="pt-4 md:pt-6"><button type="submit" class="btn-pro w-full bg-primary text-white font-extrabold py-3 md:py-4 rounded-xl md:rounded-2xl shadow-md text-sm md:text-base"><i class="fas fa-save"></i> Simpan Pengaturan</button></div></form></div>
+            <div class="bg-white rounded-2xl md:rounded-3xl shadow-sm p-4 md:p-6 border border-slate-100"><h3 class="text-lg md:text-xl font-black mb-4 md:mb-6 text-slate-800"><i class="fas fa-sliders-h text-primary mr-2"></i> Parameter Ujian</h3><form onsubmit="saveAdminUjian(false); return false;" class="space-y-4 md:space-y-6"><div><label class="block text-slate-700 font-extrabold mb-2 text-sm md:text-base">Paket Soal Aktif</label><select id="inp-ujian-paket" class="w-full bg-slate-50 border-2 border-slate-200 p-3 md:p-4 rounded-xl md:rounded-2xl font-bold focus:border-primary outline-none text-sm md:text-base"><option value="Tryout">Paket Tryout (40 Soal)</option><option value="Ujian">Paket Ujian (40 Soal)</option></select><p class="text-[10px] md:text-xs text-slate-500 mt-2 font-bold">*Siswa hanya akan mengerjakan soal dari paket ini.</p></div><div><label class="block text-slate-700 font-extrabold mb-2 text-sm md:text-base">Nama Ujian (Misal: PAS / UTS)</label><input type="text" id="inp-ujian-mapel" class="w-full bg-slate-50 border-2 border-slate-200 p-3 md:p-4 rounded-xl md:rounded-2xl font-bold focus:border-primary outline-none text-sm md:text-base" required /></div><div class="grid grid-cols-1 sm:grid-cols-2 gap-4"><div><label class="block text-slate-700 font-extrabold mb-2 text-sm md:text-base">Durasi (Menit)</label><input type="number" id="inp-ujian-durasi" class="w-full bg-slate-50 border-2 border-slate-200 p-3 md:p-4 rounded-xl md:rounded-2xl font-bold focus:border-primary outline-none text-sm md:text-base" required /></div><div><label class="block text-slate-700 font-extrabold mb-2 text-sm md:text-base">Jadwal Ujian</label><input type="date" id="inp-ujian-jadwal" class="w-full bg-slate-50 border-2 border-slate-200 p-3 md:p-4 rounded-xl md:rounded-2xl font-bold focus:border-primary outline-none text-sm md:text-base" required /></div></div><div class="pt-4 md:pt-6"><button type="submit" class="btn-pro w-full bg-primary text-white font-extrabold py-3 md:py-4 rounded-xl md:rounded-2xl shadow-md text-sm md:text-base"><i class="fas fa-save"></i> Simpan Pengaturan</button></div></form></div>
+          </div>
+        </div>
+        <!-- ADMIN NILAI -->
+        <div id="admin-tab-nilai" class="admin-tab-content hidden fade-in-up">
+          <div class="bg-white rounded-2xl md:rounded-3xl shadow-sm border border-slate-100 p-4 md:p-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 md:mb-8 gap-4"><h3 class="text-xl md:text-2xl font-black text-slate-800"><i class="fas fa-medal text-warning mr-2"></i> Rekap Nilai Siswa</h3><div class="flex gap-2 md:gap-3 w-full md:w-auto"><button onclick="exportToExcel()" class="btn-pro px-3 py-2 md:px-4 md:py-2.5 bg-success text-white rounded-xl font-bold text-xs md:text-sm shadow-sm flex-1 md:flex-none justify-center"><i class="fas fa-file-excel"></i> Unduh Excel</button><button onclick="exportToPDF()" class="btn-pro px-3 py-2 md:px-4 md:py-2.5 bg-danger text-white rounded-xl font-bold text-xs md:text-sm shadow-sm flex-1 md:flex-none justify-center"><i class="fas fa-file-pdf"></i> Unduh PDF</button></div></div>
+            <div class="overflow-x-auto rounded-xl md:rounded-2xl border border-slate-200 custom-scrollbar"><table class="w-full text-left whitespace-nowrap"><thead class="bg-slate-100 text-slate-500 font-black border-b border-slate-200 text-xs md:text-sm"><tr><th class="p-4 md:p-5">No</th><th class="p-4 md:p-5">Nama Siswa</th><th class="p-4 md:p-5">Paket & Mapel</th><th class="p-4 md:p-5 text-center text-success"><i class="fas fa-check"></i> Benar</th><th class="p-4 md:p-5 text-center text-danger"><i class="fas fa-times"></i> Salah</th><th class="p-4 md:p-5 text-center text-primary"><i class="fas fa-star"></i> Nilai Akhir</th></tr></thead><tbody id="tbody-admin-nilai" class="text-sm md:text-base"></tbody></table></div>
           </div>
         </div>
         <!-- ADMIN NILAI -->
@@ -339,7 +358,24 @@
         <div id="guru-tab-input" class="guru-tab-content hidden fade-in-up">
           <div class="bg-white rounded-2xl md:rounded-3xl shadow-sm border border-slate-100 p-4 md:p-8 max-w-4xl mx-auto space-y-6 md:space-y-8">
             <form onsubmit="saveSoalBaru(event)" id="form-input-soal">
-              <div class="bg-primary/5 border border-primary/20 p-4 md:p-5 rounded-xl md:rounded-2xl mb-6 md:mb-8"><label class="block font-black text-primary mb-2 md:mb-3 text-sm md:text-lg"><i class="fas fa-folder-open"></i> Pilih Paket Soal</label><select id="inp-soal-paket" class="w-full bg-white border-2 border-primary/30 rounded-xl p-3 md:p-4 focus:border-primary outline-none font-bold text-sm md:text-lg text-slate-700"><option value="Tryout">Paket Tryout</option><option value="Ujian">Paket Ujian</option></select></div>
+              <div class="bg-primary/5 border border-primary/20 p-4 md:p-5 rounded-xl md:rounded-2xl mb-6 md:mb-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label class="block font-black text-primary mb-2 md:mb-3 text-sm md:text-lg"><i class="fas fa-folder-open"></i> Pilih Paket Soal</label>
+                  <select id="inp-soal-paket" class="w-full bg-white border-2 border-primary/30 rounded-xl p-3 md:p-4 focus:border-primary outline-none font-bold text-sm md:text-lg text-slate-700"><option value="Tryout">Paket Tryout</option><option value="Ujian">Paket Ujian</option></select>
+                </div>
+                <div>
+                  <label class="block font-black text-primary mb-2 md:mb-3 text-sm md:text-lg"><i class="fas fa-book"></i> Pilih Mata Pelajaran</label>
+                  <select id="inp-soal-mapel" class="w-full bg-white border-2 border-primary/30 rounded-xl p-3 md:p-4 focus:border-primary outline-none font-bold text-sm md:text-lg text-slate-700">
+                    <option value="Pendidikan Agama Katolik dan Budi Pekerti">Pendidikan Agama Katolik dan Budi Pekerti</option>
+                    <option value="Pendidikan Pancasila">Pendidikan Pancasila</option>
+                    <option value="Bahasa Indonesia">Bahasa Indonesia</option>
+                    <option value="Matematika">Matematika</option>
+                    <option value="IPAS">IPAS</option>
+                    <option value="Seni Teater">Seni Teater</option>
+                    <option value="PJOK">PJOK</option>
+                  </select>
+                </div>
+              </div>
               <div class="mb-6 md:mb-8"><label class="block font-black text-slate-700 mb-2 md:mb-3 text-sm md:text-lg">Pertanyaan Soal</label><textarea id="inp-soal-pertanyaan" required class="w-full bg-slate-50 border-2 border-slate-200 rounded-xl md:rounded-2xl p-4 md:p-5 focus:border-success outline-none h-32 md:h-40 font-bold text-sm md:text-lg resize-none placeholder:text-slate-400" placeholder="Tulis pertanyaan..."></textarea></div>
               <div class="p-4 md:p-5 border-2 border-dashed border-slate-300 rounded-xl md:rounded-2xl bg-slate-50 mb-6 md:mb-8"><label class="block font-black text-slate-700 mb-2 md:mb-3 text-sm md:text-lg"><i class="fas fa-image text-slate-400 mr-2"></i> Gambar (Opsional)</label><div class="flex flex-col gap-3 md:gap-4"><input type="text" id="inp-soal-gambar-url" oninput="updatePreview('inp-soal-gambar-url', 'preview-soal-img')" class="w-full bg-white border-2 border-slate-200 rounded-xl p-3 focus:border-success outline-none font-bold text-sm md:text-base" placeholder="Paste URL Gambar..." /><div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4"><span class="font-bold text-slate-500 text-xs md:text-sm">ATAU UPLOAD</span><input type="file" accept="image/*" onchange="handleImageUpload(this, 'inp-soal-gambar-url', 'preview-soal-img')" class="block w-full text-xs md:text-sm font-bold text-slate-500 file:bg-primary/10 file:text-primary file:rounded-xl file:border-0 file:px-3 file:py-1.5 md:file:px-4 md:file:py-2" /></div></div><div id="preview-soal-img-cont" class="mt-4 border-2 border-slate-200 rounded-xl p-2 bg-white inline-block hidden"><img id="preview-soal-img" src="" class="max-h-32 md:max-h-40 rounded-lg" /></div></div>
               <div class="mb-6 md:mb-8"><label class="block font-black text-slate-700 mb-2 md:mb-3 text-sm md:text-lg">Pilihan & Kunci Jawaban</label><div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
@@ -401,7 +437,10 @@
     <div class="bg-white rounded-2xl md:rounded-3xl p-4 md:p-8 max-w-4xl w-[95%] md:w-full shadow-2xl max-h-[90vh] overflow-y-auto custom-scrollbar">
       <div class="flex justify-between items-center mb-4 md:mb-6"><h3 class="text-xl md:text-2xl font-black text-slate-800">Edit Soal</h3><button onclick="closeModal('modal-edit-soal')" class="text-slate-400 hover:text-danger text-xl md:text-2xl"><i class="fas fa-times"></i></button></div>
       <form onsubmit="saveEditSoal(event)" class="space-y-4 md:space-y-6">
-        <div class="bg-warning/10 border border-warning/30 p-3 md:p-4 rounded-xl md:rounded-2xl flex flex-col sm:flex-row items-start sm:items-center gap-2 md:gap-4"><label class="font-black text-slate-800 text-sm md:text-base">Ubah Paket:</label><select id="edit-soal-paket" class="bg-white border-2 border-warning/50 rounded-xl px-3 py-1.5 md:px-4 md:py-2 focus:border-warning outline-none font-bold text-sm md:text-base w-full sm:w-auto"><option value="Tryout">Paket Tryout</option><option value="Ujian">Paket Ujian</option></select></div>
+        <div class="bg-warning/10 border border-warning/30 p-3 md:p-4 rounded-xl md:rounded-2xl flex flex-col sm:flex-row items-start sm:items-center gap-2 md:gap-4 w-full">
+          <div class="flex-1 w-full"><label class="font-black text-slate-800 text-sm md:text-base mb-1 block">Ubah Paket:</label><select id="edit-soal-paket" class="w-full bg-white border-2 border-warning/50 rounded-xl px-3 py-1.5 md:px-4 md:py-2 focus:border-warning outline-none font-bold text-sm md:text-base"><option value="Tryout">Paket Tryout</option><option value="Ujian">Paket Ujian</option></select></div>
+          <div class="flex-1 w-full"><label class="font-black text-slate-800 text-sm md:text-base mb-1 block">Ubah Mapel:</label><select id="edit-soal-mapel" class="w-full bg-white border-2 border-warning/50 rounded-xl px-3 py-1.5 md:px-4 md:py-2 focus:border-warning outline-none font-bold text-sm md:text-base"><option value="Pendidikan Agama Katolik dan Budi Pekerti">Pendidikan Agama Katolik dan Budi Pekerti</option><option value="Pendidikan Pancasila">Pendidikan Pancasila</option><option value="Bahasa Indonesia">Bahasa Indonesia</option><option value="Matematika">Matematika</option><option value="IPAS">IPAS</option><option value="Seni Teater">Seni Teater</option><option value="PJOK">PJOK</option></select></div>
+        </div>
         <div><label class="block font-black text-slate-700 mb-2 md:mb-3 text-sm md:text-lg">Pertanyaan Soal</label><textarea id="edit-soal-pertanyaan" required class="w-full bg-slate-50 border-2 border-slate-200 rounded-xl md:rounded-2xl p-3 md:p-5 focus:border-warning outline-none h-24 md:h-32 font-bold text-sm md:text-lg resize-none"></textarea></div>
         <div class="p-3 md:p-4 border-2 border-dashed border-slate-300 rounded-xl md:rounded-2xl bg-slate-50"><label class="block font-black text-slate-700 mb-2 md:mb-3 text-sm md:text-lg"><i class="fas fa-image text-slate-400 mr-2"></i> Ubah Gambar</label><div class="flex flex-col gap-3 md:gap-4"><input type="text" id="edit-soal-gambar-url" oninput="updatePreview('edit-soal-gambar-url', 'edit-preview-img')" class="w-full bg-white border-2 border-slate-200 rounded-lg md:rounded-xl p-2.5 md:p-3 focus:border-warning outline-none font-bold text-sm md:text-base" placeholder="Paste URL..." /><div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 md:gap-4"><span class="font-bold text-slate-500 text-xs md:text-sm">ATAU UPLOAD</span><input type="file" accept="image/*" onchange="handleImageUpload(this, 'edit-soal-gambar-url', 'edit-preview-img')" class="block w-full text-xs md:text-sm font-bold text-slate-500 file:bg-warning/20 file:text-warning file:rounded-lg md:file:rounded-xl file:border-0 file:px-3 file:py-1.5 md:file:px-4 md:file:py-2" /></div></div><div id="edit-preview-img-cont" class="mt-3 md:mt-4 border-2 border-slate-200 rounded-xl p-2 bg-white inline-block relative hidden"><button type="button" onclick="document.getElementById('edit-soal-gambar-url').value=''; updatePreview('edit-soal-gambar-url', 'edit-preview-img')" class="absolute -top-3 -right-3 w-6 h-6 md:w-8 md:h-8 bg-danger text-white rounded-full font-bold shadow-md text-xs md:text-base"><i class="fas fa-times"></i></button><img id="edit-preview-img" src="" class="max-h-24 md:max-h-32 rounded-lg" /></div></div>
         <div><label class="block font-black text-slate-700 mb-2 md:mb-3 text-sm md:text-lg">Pilihan Jawaban & Kunci</label><div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
@@ -504,8 +543,8 @@
             defUsers.forEach(u => setDoc(doc(usersRef, String(u.id)), u));
             setDoc(doc(configRef, 'ujian'), window.appState.ujianSet);
             setDoc(doc(configRef, 'settings'), window.appState.settings);
-            // Default soal dummy (2 soal saja untuk hemat penulisan awal)
-            setDoc(doc(soalRef, 'S-Tryout-1'), { id: 'S-Tryout-1', paket: 'Tryout', pertanyaan: 'Berapakah hasil dari 15 + 25?', gambar: '', opsi_a: '30', opsi_b: '40', opsi_c: '50', opsi_d: '60', jawaban_benar: 'B' });
+            // Default soal dummy 
+            setDoc(doc(soalRef, 'S-Tryout-1'), { id: 'S-Tryout-1', paket: 'Tryout', mapel: 'Matematika', pertanyaan: 'Berapakah hasil dari 15 + 25?', gambar: '', opsi_a: '30', opsi_b: '40', opsi_c: '50', opsi_d: '60', jawaban_benar: 'B' });
         }
 
         // Live Listeners
@@ -597,8 +636,8 @@
       } else if (currentUser.role === 'siswa') {
         document.querySelectorAll('.ui-siswa-name').forEach(el => el.innerText = currentUser.name); document.querySelectorAll('.ui-siswa-initial').forEach(el => el.innerText = currentUser.name.charAt(0));
         document.getElementById('ui-siswa-mapel').innerText = window.appState.ujianSet.mapel; document.getElementById('ui-siswa-paket').innerText = window.appState.ujianSet.paketAktif; document.getElementById('ui-siswa-durasi').innerText = window.appState.ujianSet.durasi; document.getElementById('ui-siswa-jadwal').innerText = window.appState.ujianSet.jadwal;
-        const existing = window.appState.results.find(r => r.userId === currentUser.id && r.paket === window.appState.ujianSet.paketAktif);
-        window.showScreen('view-siswa'); if(existing) window.showSiswaHasil(existing);
+        window.showScreen('view-siswa');
+        // Pengecekan riwayat hasil ujian dipindahkan setelah siswa memilih mata pelajaran
       }
     }
 
@@ -635,8 +674,8 @@
     };
 
     window.renderAdminNilai = function() {
-      let html = ''; window.appState.results.forEach((r, i) => { html += `<tr class="border-b hover:bg-slate-50 font-bold text-slate-700"><td class="p-4 md:p-5">${i+1}</td><td class="p-4 md:p-5">${r.userName}</td><td class="p-4 md:p-5"><span class="px-2 py-1 md:px-3 md:py-1 bg-slate-200 rounded-lg text-[10px] md:text-xs">${r.paket}</span></td><td class="p-4 md:p-5 text-center text-success">${r.stats.benar}</td><td class="p-4 md:p-5 text-center text-danger">${r.stats.salah}</td><td class="p-4 md:p-5 text-center font-black text-lg md:text-xl text-primary">${r.nilai}</td></tr>`; });
-      document.getElementById('tbody-admin-nilai').innerHTML = html || `<tr><td colspan="6" class="text-center p-8 text-slate-500 font-bold">Belum ada data nilai.</td></tr>`;
+      let html = ''; window.appState.results.forEach((r, i) => { html += `<tr class="border-b hover:bg-slate-50 font-bold text-slate-700"><td class="p-4 md:p-5">${i+1}</td><td class="p-4 md:p-5">${r.userName}</td><td class="p-4 md:p-5"><span class="px-2 py-1 md:px-3 md:py-1 bg-slate-200 rounded-lg text-[10px] md:text-xs block mb-1">${r.paket}</span><span class="text-xs font-bold text-primary block truncate max-w-[150px]">${r.mapel || '-'}</span></td><td class="p-4 md:p-5 text-center text-success">${r.stats.benar}</td><td class="p-4 md:p-5 text-center text-danger">${r.stats.salah}</td><td class="p-4 md:p-5 text-center font-black text-lg md:text-xl text-primary">${r.nilai}</td></tr>`; });
+      document.getElementById('tbody-admin-nilai').innerHTML = html || `<tr><td colspan="6" class="text-center p-8 text-slate-500 font-bold">Belum ada data nilai dari server.</td></tr>`;
     };
 
     let editUserId = null; let activeRoleForm = 'siswa';
@@ -697,32 +736,42 @@
     window.updatePreview = function(idUrl, idPreview) { const v = document.getElementById(idUrl).value; const c = document.getElementById(idPreview+'-cont'); if(v) { document.getElementById(idPreview).src = v; c.classList.remove('hidden'); } else { c.classList.add('hidden'); } };
 
     window.saveSoalBaru = function(e) {
-      e.preventDefault(); const p = document.getElementById('inp-soal-paket').value; const t = document.getElementById('inp-soal-pertanyaan').value; const g = document.getElementById('inp-soal-gambar-url').value; const a = document.getElementById('inp-soal-opt-a').value; const b = document.getElementById('inp-soal-opt-b').value; const c = document.getElementById('inp-soal-opt-c').value; const d = document.getElementById('inp-soal-opt-d').value; const k = document.querySelector('input[name="kunci"]:checked')?.value;
+      e.preventDefault(); const p = document.getElementById('inp-soal-paket').value; const m = document.getElementById('inp-soal-mapel').value; const t = document.getElementById('inp-soal-pertanyaan').value; const g = document.getElementById('inp-soal-gambar-url').value; const a = document.getElementById('inp-soal-opt-a').value; const b = document.getElementById('inp-soal-opt-b').value; const c = document.getElementById('inp-soal-opt-c').value; const d = document.getElementById('inp-soal-opt-d').value; const k = document.querySelector('input[name="kunci"]:checked')?.value;
       if(!k) return window.showAlert("Pilih kunci jawaban!", "danger");
       const idS = `S-${p}-${Date.now()}`;
-      setDoc(doc(dbStore, 'artifacts', appId, 'public', 'data', 'soal', idS), { id: idS, paket: p, pertanyaan: t, gambar: g, opsi_a: a, opsi_b: b, opsi_c: c, opsi_d: d, jawaban_benar: k }).then(() => { document.getElementById('form-input-soal').reset(); window.updatePreview('inp-soal-gambar-url', 'preview-soal-img'); document.getElementById('bank-filter').value = p; window.showAlert("Soal disimpan!"); window.switchGuruTab('bank'); });
+      setDoc(doc(dbStore, 'artifacts', appId, 'public', 'data', 'soal', idS), { id: idS, paket: p, mapel: m, pertanyaan: t, gambar: g, opsi_a: a, opsi_b: b, opsi_c: c, opsi_d: d, jawaban_benar: k }).then(() => { document.getElementById('form-input-soal').reset(); window.updatePreview('inp-soal-gambar-url', 'preview-soal-img'); document.getElementById('bank-filter').value = p; window.showAlert("Soal disimpan!"); window.switchGuruTab('bank'); });
     };
 
     window.renderGuruBank = function() {
       const f = document.getElementById('bank-filter').value; const lst = window.appState.soal.filter(s => f==='Semua' || s.paket===f); document.getElementById('bank-total-count').innerText = lst.length;
       let h = ''; lst.forEach((s, i) => {
         let opts = ''; ['A','B','C','D'].forEach(o => { opts += `<div class="p-3 md:p-4 rounded-xl md:rounded-2xl border-2 ${s.jawaban_benar===o ? 'bg-success/10 border-success text-success' : 'bg-slate-50 border-slate-100'}"><span class="mr-2 md:mr-3 font-black">${o}.</span> <span class="font-bold text-sm md:text-base">${s['opsi_'+o.toLowerCase()]}</span> ${s.jawaban_benar===o ? '<i class="fas fa-check-circle ml-2 float-right mt-1"></i>' : ''}</div>`; });
-        h += `<div class="bg-white rounded-2xl md:rounded-3xl p-4 md:p-6 border border-slate-100 shadow-sm border-l-4 md:border-l-8 ${s.paket==='Tryout'?'border-l-warning':'border-l-primary'}"><div class="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center mb-4 gap-3"><div class="flex items-center gap-2 md:gap-3"><span class="font-black text-slate-400 uppercase text-xs md:text-sm">Soal ID: ${s.id}</span><span class="px-2 py-1 md:px-3 md:py-1.5 rounded-lg text-[10px] md:text-xs font-black uppercase ${s.paket==='Tryout'?'bg-warning/10 text-warning':'bg-primary/10 text-primary'}">${s.paket}</span></div><div class="flex gap-2 w-full sm:w-auto justify-end"><button onclick="openModalEditSoal('${s.id}')" class="w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl bg-warning/20 text-warning hover:bg-warning hover:text-white"><i class="fas fa-edit"></i></button><button onclick="confirmDeleteSoal('${s.id}')" class="w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl bg-danger/20 text-danger hover:bg-danger hover:text-white"><i class="fas fa-trash"></i></button></div></div>${s.gambar ? `<div class="mb-4"><img src="${s.gambar}" class="max-h-32 md:max-h-48 object-contain rounded-lg border" /></div>` : ''}<p class="font-extrabold text-slate-800 text-base md:text-lg mb-4 md:mb-6">${s.pertanyaan}</p><div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">${opts}</div></div>`;
+        h += `<div class="bg-white rounded-2xl md:rounded-3xl p-4 md:p-6 border border-slate-100 shadow-sm border-l-4 md:border-l-8 ${s.paket==='Tryout'?'border-l-warning':'border-l-primary'}"><div class="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center mb-4 gap-3"><div class="flex flex-wrap items-center gap-2 md:gap-3"><span class="font-black text-slate-400 uppercase text-xs md:text-sm">Soal ID: ${s.id}</span><span class="px-2 py-1 md:px-3 md:py-1.5 rounded-lg text-[10px] md:text-xs font-black uppercase ${s.paket==='Tryout'?'bg-warning/10 text-warning':'bg-primary/10 text-primary'}">${s.paket}</span><span class="px-2 py-1 md:px-3 md:py-1.5 rounded-lg text-[10px] md:text-xs font-black uppercase bg-slate-200 text-slate-600">${s.mapel || 'UMUM'}</span></div><div class="flex gap-2 w-full sm:w-auto justify-end"><button onclick="openModalEditSoal('${s.id}')" class="w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl bg-warning/20 text-warning hover:bg-warning hover:text-white"><i class="fas fa-edit"></i></button><button onclick="confirmDeleteSoal('${s.id}')" class="w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl bg-danger/20 text-danger hover:bg-danger hover:text-white"><i class="fas fa-trash"></i></button></div></div>${s.gambar ? `<div class="mb-4"><img src="${s.gambar}" class="max-h-32 md:max-h-48 object-contain rounded-lg border" /></div>` : ''}<p class="font-extrabold text-slate-800 text-base md:text-lg mb-4 md:mb-6">${s.pertanyaan}</p><div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">${opts}</div></div>`;
       });
       document.getElementById('bank-soal-container').innerHTML = h || `<div class="text-center py-12 text-slate-400 font-bold bg-white rounded-3xl border-2 border-dashed">Belum ada soal.</div>`;
     };
 
-    window.openModalEditSoal = function(id) { editSoalId = id; const s = window.appState.soal.find(x=>x.id===id); document.getElementById('edit-soal-paket').value = s.paket; document.getElementById('edit-soal-pertanyaan').value = s.pertanyaan; document.getElementById('edit-soal-gambar-url').value = s.gambar || ''; window.updatePreview('edit-soal-gambar-url', 'edit-preview-img'); document.getElementById('edit-soal-opt-a').value = s.opsi_a; document.getElementById('edit-soal-opt-b').value = s.opsi_b; document.getElementById('edit-soal-opt-c').value = s.opsi_c; document.getElementById('edit-soal-opt-d').value = s.opsi_d; document.querySelector(`input[name="edit_kunci"][value="${s.jawaban_benar}"]`).checked = true; openModal('modal-edit-soal'); };
-    window.saveEditSoal = function(e) { e.preventDefault(); const idS = editSoalId; const newData = { id: idS, paket: document.getElementById('edit-soal-paket').value, pertanyaan: document.getElementById('edit-soal-pertanyaan').value, gambar: document.getElementById('edit-soal-gambar-url').value, opsi_a: document.getElementById('edit-soal-opt-a').value, opsi_b: document.getElementById('edit-soal-opt-b').value, opsi_c: document.getElementById('edit-soal-opt-c').value, opsi_d: document.getElementById('edit-soal-opt-d').value, jawaban_benar: document.querySelector('input[name="edit_kunci"]:checked').value }; setDoc(doc(dbStore, 'artifacts', appId, 'public', 'data', 'soal', idS), newData).then(() => { closeModal('modal-edit-soal'); window.showAlert("Soal diubah!"); }); };
+    window.openModalEditSoal = function(id) { editSoalId = id; const s = window.appState.soal.find(x=>x.id===id); document.getElementById('edit-soal-paket').value = s.paket; document.getElementById('edit-soal-mapel').value = s.mapel || 'Matematika'; document.getElementById('edit-soal-pertanyaan').value = s.pertanyaan; document.getElementById('edit-soal-gambar-url').value = s.gambar || ''; window.updatePreview('edit-soal-gambar-url', 'edit-preview-img'); document.getElementById('edit-soal-opt-a').value = s.opsi_a; document.getElementById('edit-soal-opt-b').value = s.opsi_b; document.getElementById('edit-soal-opt-c').value = s.opsi_c; document.getElementById('edit-soal-opt-d').value = s.opsi_d; document.querySelector(`input[name="edit_kunci"][value="${s.jawaban_benar}"]`).checked = true; openModal('modal-edit-soal'); };
+    window.saveEditSoal = function(e) { e.preventDefault(); const idS = editSoalId; const newData = { id: idS, paket: document.getElementById('edit-soal-paket').value, mapel: document.getElementById('edit-soal-mapel').value, pertanyaan: document.getElementById('edit-soal-pertanyaan').value, gambar: document.getElementById('edit-soal-gambar-url').value, opsi_a: document.getElementById('edit-soal-opt-a').value, opsi_b: document.getElementById('edit-soal-opt-b').value, opsi_c: document.getElementById('edit-soal-opt-c').value, opsi_d: document.getElementById('edit-soal-opt-d').value, jawaban_benar: document.querySelector('input[name="edit_kunci"]:checked').value }; setDoc(doc(dbStore, 'artifacts', appId, 'public', 'data', 'soal', idS), newData).then(() => { closeModal('modal-edit-soal'); window.showAlert("Soal diubah!"); }); };
     window.confirmDeleteSoal = function(id) { window.showConfirm("Yakin hapus soal ini dari Cloud?", () => { deleteDoc(doc(dbStore, 'artifacts', appId, 'public', 'data', 'soal', id)).then(() => window.showAlert("Soal dihapus.")); }); };
 
     // --- SISWA ---
     window.startUjian = function() {
       if(document.getElementById('siswa-input-token').value.toUpperCase() !== window.appState.ujianSet.token) { document.getElementById('siswa-token-error').classList.remove('hidden'); document.getElementById('siswa-token-error').innerText = "Ups! Token Salah."; return; }
-      activeSiswaSoal = window.appState.soal.filter(s => s.paket === window.appState.ujianSet.paketAktif);
-      if(activeSiswaSoal.length === 0) { document.getElementById('siswa-token-error').classList.remove('hidden'); document.getElementById('siswa-token-error').innerText = "Belum ada soal di paket ini."; return; }
       
-      currentSoalIndex = 0; answers = {}; document.querySelectorAll('.ui-siswa-mapel-text').forEach(el => el.innerText = window.appState.ujianSet.mapel); document.getElementById('siswa-soal-total').innerText = activeSiswaSoal.length;
+      const selectedMapel = document.getElementById('siswa-select-mapel').value;
+      window.currentUjianMapel = selectedMapel;
+
+      const existing = window.appState.results.find(r => r.userId === currentUser.id && r.paket === window.appState.ujianSet.paketAktif && r.mapel === selectedMapel);
+      if(existing) {
+          window.showSiswaHasil(existing);
+          return;
+      }
+
+      activeSiswaSoal = window.appState.soal.filter(s => s.paket === window.appState.ujianSet.paketAktif && s.mapel === selectedMapel);
+      if(activeSiswaSoal.length === 0) { document.getElementById('siswa-token-error').classList.remove('hidden'); document.getElementById('siswa-token-error').innerText = `Belum ada soal untuk mata pelajaran ${selectedMapel} di paket ini.`; return; }
+      
+      currentSoalIndex = 0; answers = {}; document.querySelectorAll('.ui-siswa-mapel-text').forEach(el => el.innerText = selectedMapel); document.getElementById('siswa-soal-total').innerText = activeSiswaSoal.length;
       document.getElementById('siswa-step-token').classList.remove('active'); document.getElementById('siswa-step-ujian').classList.add('active');
       
       timeLeft = window.appState.ujianSet.durasi * 60;
@@ -756,18 +805,18 @@
       clearInterval(timerInterval); let b=0, s=0, k=0, r=0;
       const detailJawaban = activeSiswaSoal.map((soal, idx) => { const ans = answers[idx]; if(!ans || !ans.jawaban) k++; else { if(ans.ragu) r++; if(ans.jawaban === soal.jawaban_benar) b++; else s++; } return { id: soal.id, no: idx+1, pertanyaan: soal.pertanyaan, jawabanBenar: soal.jawaban_benar, jawabanSiswa: ans?.jawaban || '-', isCorrect: ans?.jawaban === soal.jawaban_benar }; });
       const nilai = Math.round((b / activeSiswaSoal.length) * 100);
-      const res = { userId: currentUser.id, userName: currentUser.name, paket: window.appState.ujianSet.paketAktif, nilai, stats: { benar:b, salah:s, kosong:k, raguCount:r }, detailJawaban };
-      setDoc(doc(dbStore, 'artifacts', appId, 'public', 'data', 'results', String(currentUser.id + '_' + res.paket)), res).then(() => window.showSiswaHasil(res));
+      const res = { userId: currentUser.id, userName: currentUser.name, paket: window.appState.ujianSet.paketAktif, mapel: window.currentUjianMapel, nilai, stats: { benar:b, salah:s, kosong:k, raguCount:r }, detailJawaban };
+      setDoc(doc(dbStore, 'artifacts', appId, 'public', 'data', 'results', String(currentUser.id + '_' + res.paket + '_' + res.mapel.replace(/\s+/g,'_'))), res).then(() => window.showSiswaHasil(res));
     };
 
     window.showSiswaHasil = function(res) {
       document.getElementById('siswa-step-ujian').classList.remove('active'); document.getElementById('siswa-step-hasil').classList.add('active');
-      const isL = res.nilai >= 70; document.getElementById('hasil-icon-box').className = `w-20 h-20 md:w-28 md:h-28 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6 shadow-xl text-white ${isL ? 'bg-success shadow-success/40' : 'bg-warning shadow-warning/40'}`; document.getElementById('hasil-icon').className = `fas text-4xl md:text-[56px] ${isL ? 'fa-trophy' : 'fa-star'}`; document.getElementById('hasil-msg').innerText = isL ? 'Luar biasa! Kamu mendapatkan nilai yang sangat bagus.' : 'Kerja bagus! Jangan menyerah dan belajar lebih giat lagi ya.'; document.getElementById('hasil-paket-text').innerText = res.paket; document.getElementById('hasil-nilai-text').innerText = window.appState.settings.tampilkanNilai ? res.nilai : 'Rahasia'; document.getElementById('hasil-nilai-text').className = `text-7xl md:text-9xl font-black drop-shadow-md ${isL ? 'text-success' : 'text-primary'}`; document.getElementById('hasil-benar').innerText = window.appState.settings.tampilkanNilai ? res.stats.benar : '?'; document.getElementById('hasil-salah').innerText = window.appState.settings.tampilkanNilai ? res.stats.salah : '?';
+      const isL = res.nilai >= 70; document.getElementById('hasil-icon-box').className = `w-20 h-20 md:w-28 md:h-28 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6 shadow-xl text-white ${isL ? 'bg-success shadow-success/40' : 'bg-warning shadow-warning/40'}`; document.getElementById('hasil-icon').className = `fas text-4xl md:text-[56px] ${isL ? 'fa-trophy' : 'fa-star'}`; document.getElementById('hasil-msg').innerText = isL ? 'Luar biasa! Kamu mendapatkan nilai yang sangat bagus.' : 'Kerja bagus! Jangan menyerah dan belajar lebih giat lagi ya.'; document.getElementById('hasil-paket-text').innerText = `${res.paket} - ${res.mapel}`; document.getElementById('hasil-nilai-text').innerText = window.appState.settings.tampilkanNilai ? res.nilai : 'Rahasia'; document.getElementById('hasil-nilai-text').className = `text-7xl md:text-9xl font-black drop-shadow-md ${isL ? 'text-success' : 'text-primary'}`; document.getElementById('hasil-benar').innerText = window.appState.settings.tampilkanNilai ? res.stats.benar : '?'; document.getElementById('hasil-salah').innerText = window.appState.settings.tampilkanNilai ? res.stats.salah : '?';
     };
 
     // --- UTILS EXPORT ---
     window.exportToExcel = function() { 
-        const data = window.appState.results.map((r, i) => ({"No": i + 1, "Nama Siswa": r.userName, "Paket": r.paket, "Benar": r.stats.benar, "Salah": r.stats.salah, "Kosong": r.stats.kosong, "Nilai Akhir": r.nilai})); 
+        const data = window.appState.results.map((r, i) => ({"No": i + 1, "Nama Siswa": r.userName, "Paket": r.paket, "Mata Pelajaran": r.mapel || '-', "Benar": r.stats.benar, "Salah": r.stats.salah, "Kosong": r.stats.kosong, "Nilai Akhir": r.nilai})); 
         const ws = XLSX.utils.json_to_sheet(data); 
         const wb = XLSX.utils.book_new(); 
         XLSX.utils.book_append_sheet(wb, ws, "Rekap Nilai"); 
@@ -776,7 +825,7 @@
     
     window.exportAnalisisToExcel = function() { 
         const data = window.appState.results.map((r, i) => { 
-            const row = { "No": i + 1, "Nama Siswa": r.userName }; 
+            const row = { "No": i + 1, "Nama Siswa": r.userName, "Mata Pelajaran": r.mapel || '-' }; 
             r.detailJawaban.forEach((dj, j) => { row[`Soal ${j + 1}`] = dj.isCorrect ? 1 : 0; }); 
             row["Jumlah Skor"] = r.stats.benar; row["Nilai Akhir"] = r.nilai; 
             return row; 
@@ -814,8 +863,8 @@
         const doc = new jsPDF(); 
         doc.setFont("helvetica", "bold"); doc.setFontSize(16); doc.text("Rekapitulasi Nilai Ujian", 14, 20); 
         doc.setFontSize(11); doc.setFont("helvetica", "normal"); doc.text(`Tanggal Cetak: ${new Date().toLocaleDateString('id-ID')}`, 14, 28); 
-        const tableData = window.appState.results.map((r, i) => [i + 1, r.userName, r.paket, r.stats.benar, r.stats.salah, r.stats.kosong, r.nilai]); 
-        doc.autoTable({ startY: 35, head: [['No', 'Nama Siswa', 'Paket', 'Benar', 'Salah', 'Kosong', 'Nilai Akhir']], body: tableData, theme: 'grid', headStyles: { fillColor: [74, 144, 226] } }); 
+        const tableData = window.appState.results.map((r, i) => [i + 1, r.userName, r.paket + " - " + (r.mapel || '-'), r.stats.benar, r.stats.salah, r.stats.kosong, r.nilai]); 
+        doc.autoTable({ startY: 35, head: [['No', 'Nama Siswa', 'Paket & Mapel', 'Benar', 'Salah', 'Kosong', 'Nilai Akhir']], body: tableData, theme: 'grid', headStyles: { fillColor: [74, 144, 226] } }); 
         doc.save("Rekap_Nilai.pdf"); 
     };
     
@@ -826,7 +875,7 @@
         let htmlContent = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Bank Soal</title></head><body style="font-family: 'Times New Roman', Times, serif; font-size: 12pt;"><h2 style="text-align: center;">BANK SOAL - SIAP SD (${p})</h2><hr/><br/>`; 
         lst.forEach((s, i) => { 
             let imgHtml = s.gambar ? `<br/><img src="${s.gambar}" style="max-width:400px; margin-bottom:10px;"/><br/>` : ''; 
-            htmlContent += `<div style="margin-bottom: 20px;"><p style="margin: 0 0 5px 0;"><strong>${i + 1}. ${s.pertanyaan}</strong></p>${imgHtml}<p style="margin: 2px 0 2px 20px;">A. ${s.opsi_a}</p><p style="margin: 2px 0 2px 20px;">B. ${s.opsi_b}</p><p style="margin: 2px 0 2px 20px;">C. ${s.opsi_c}</p><p style="margin: 2px 0 2px 20px;">D. ${s.opsi_d}</p><p style="margin: 5px 0 0 20px; color: #27AE60;"><em>Kunci Jawaban: <strong>${s.jawaban_benar}</strong></em></p></div>`; 
+            htmlContent += `<div style="margin-bottom: 20px;"><p style="margin: 0 0 5px 0;"><strong>${i + 1}. [${s.mapel || 'UMUM'}] ${s.pertanyaan}</strong></p>${imgHtml}<p style="margin: 2px 0 2px 20px;">A. ${s.opsi_a}</p><p style="margin: 2px 0 2px 20px;">B. ${s.opsi_b}</p><p style="margin: 2px 0 2px 20px;">C. ${s.opsi_c}</p><p style="margin: 2px 0 2px 20px;">D. ${s.opsi_d}</p><p style="margin: 5px 0 0 20px; color: #27AE60;"><em>Kunci Jawaban: <strong>${s.jawaban_benar}</strong></em></p></div>`; 
         }); 
         htmlContent += `</body></html>`; 
         const blob = new Blob(['\ufeff', htmlContent], { type: 'application/msword' }); 

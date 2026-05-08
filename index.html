@@ -1065,10 +1065,28 @@
       document.getElementById('bank-soal-container').innerHTML = h || `<div class="text-center py-12 text-slate-400 font-bold bg-white rounded-3xl border-2 border-dashed">Belum ada soal untuk mata pelajaran ini.</div>`;
     };
 
-    window.openModalEditSoal = function(id) { editSoalId = id; const s = window.appState.soal.find(x=>x.id===id); document.getElementById('edit-soal-paket').value = s.paket; document.getElementById('edit-soal-mapel').value = s.mapel || 'Matematika'; document.getElementById('edit-soal-pertanyaan').value = s.pertanyaan; document.getElementById('edit-soal-gambar-url').value = s.gambar || ''; window.updatePreview('edit-soal-gambar-url', 'edit-preview-img'); document.getElementById('edit-soal-opt-a').value = s.opsi_a; document.getElementById('edit-soal-opt-b').value = s.opsi_b; document.getElementById('edit-soal-opt-c').value = s.opsi_c; document.getElementById('edit-soal-opt-d').value = s.opsi_d; document.querySelector(`input[name="edit_kunci"][value="${s.jawaban_benar}"]`).checked = true; openModal('modal-edit-soal'); };
+    // PERBAIKAN: Deklarasi variabel editSoalId agar tidak terjadi error
+    let editSoalId = null;
+    
+    window.openModalEditSoal = function(id) { 
+        editSoalId = id; 
+        const s = window.appState.soal.find(x=>x.id===id); 
+        document.getElementById('edit-soal-paket').value = s.paket; 
+        document.getElementById('edit-soal-mapel').value = s.mapel || 'Matematika'; 
+        document.getElementById('edit-soal-pertanyaan').value = s.pertanyaan; 
+        document.getElementById('edit-soal-gambar-url').value = s.gambar || ''; 
+        window.updatePreview('edit-soal-gambar-url', 'edit-preview-img'); 
+        document.getElementById('edit-soal-opt-a').value = s.opsi_a; 
+        document.getElementById('edit-soal-opt-b').value = s.opsi_b; 
+        document.getElementById('edit-soal-opt-c').value = s.opsi_c; 
+        document.getElementById('edit-soal-opt-d').value = s.opsi_d; 
+        document.querySelector(`input[name="edit_kunci"][value="${s.jawaban_benar}"]`).checked = true; 
+        openModal('modal-edit-soal'); 
+    };
     
     window.saveEditSoal = function(e) { 
-        e.preventDefault(); const idS = editSoalId; 
+        e.preventDefault(); 
+        const idS = editSoalId; 
         const newData = { id: idS, paket: document.getElementById('edit-soal-paket').value, mapel: document.getElementById('edit-soal-mapel').value, pertanyaan: document.getElementById('edit-soal-pertanyaan').value, gambar: document.getElementById('edit-soal-gambar-url').value, opsi_a: document.getElementById('edit-soal-opt-a').value, opsi_b: document.getElementById('edit-soal-opt-b').value, opsi_c: document.getElementById('edit-soal-opt-c').value, opsi_d: document.getElementById('edit-soal-opt-d').value, jawaban_benar: document.querySelector('input[name="edit_kunci"]:checked').value }; 
         setDoc(doc(dbStore, 'artifacts', appId, 'public', 'data', 'soal', idS), newData)
           .then(() => { closeModal('modal-edit-soal'); window.showAlert("Perubahan soal disimpan ke Cloud!"); })

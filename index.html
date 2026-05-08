@@ -346,7 +346,14 @@
         <!-- ADMIN NILAI -->
         <div id="admin-tab-nilai" class="admin-tab-content hidden fade-in-up">
           <div class="bg-white rounded-2xl md:rounded-3xl shadow-sm border border-slate-100 p-4 md:p-6">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 md:mb-8 gap-4"><h3 class="text-xl md:text-2xl font-black text-slate-800"><i class="fas fa-medal text-warning mr-2"></i> Rekap Nilai Siswa</h3><div class="flex gap-2 md:gap-3 w-full md:w-auto"><button onclick="exportToExcel()" class="btn-pro px-3 py-2 md:px-4 md:py-2.5 bg-success text-white rounded-xl font-bold text-xs md:text-sm shadow-sm flex-1 md:flex-none justify-center"><i class="fas fa-file-excel"></i> Unduh Excel</button><button onclick="exportToPDF()" class="btn-pro px-3 py-2 md:px-4 md:py-2.5 bg-danger text-white rounded-xl font-bold text-xs md:text-sm shadow-sm flex-1 md:flex-none justify-center"><i class="fas fa-file-pdf"></i> Unduh PDF</button></div></div>
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 md:mb-8 gap-4">
+              <h3 class="text-xl md:text-2xl font-black text-slate-800"><i class="fas fa-medal text-warning mr-2"></i> Rekap Nilai Siswa</h3>
+              <div class="flex gap-2 md:gap-3 w-full md:w-auto flex-wrap">
+                <button onclick="confirmResetNilai()" class="btn-pro px-3 py-2 md:px-4 md:py-2.5 bg-slate-100 text-danger hover:bg-danger hover:text-white rounded-xl font-bold text-xs md:text-sm shadow-sm flex-1 md:flex-none justify-center transition-colors border border-danger/20"><i class="fas fa-trash-alt"></i> Reset Nilai</button>
+                <button onclick="exportToExcel()" class="btn-pro px-3 py-2 md:px-4 md:py-2.5 bg-success text-white rounded-xl font-bold text-xs md:text-sm shadow-sm flex-1 md:flex-none justify-center"><i class="fas fa-file-excel"></i> Unduh Excel</button>
+                <button onclick="exportToPDF()" class="btn-pro px-3 py-2 md:px-4 md:py-2.5 bg-danger text-white rounded-xl font-bold text-xs md:text-sm shadow-sm flex-1 md:flex-none justify-center"><i class="fas fa-file-pdf"></i> Unduh PDF</button>
+              </div>
+            </div>
             <div class="overflow-x-auto rounded-xl md:rounded-2xl border border-slate-200 custom-scrollbar"><table class="w-full text-left whitespace-nowrap"><thead class="bg-slate-100 text-slate-500 font-black border-b border-slate-200 text-xs md:text-sm"><tr><th class="p-4 md:p-5">No</th><th class="p-4 md:p-5">Nama Siswa</th><th class="p-4 md:p-5">Paket & Mapel</th><th class="p-4 md:p-5 text-center text-success"><i class="fas fa-check"></i> Benar</th><th class="p-4 md:p-5 text-center text-danger"><i class="fas fa-times"></i> Salah</th><th class="p-4 md:p-5 text-center text-primary"><i class="fas fa-star"></i> Nilai Akhir</th></tr></thead><tbody id="tbody-admin-nilai" class="text-sm md:text-base"></tbody></table></div>
           </div>
         </div>
@@ -535,8 +542,8 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
     import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    // TAMBAHKAN IMPORT enableMultiTabIndexedDbPersistence
-    import { getFirestore, collection, onSnapshot, doc, setDoc, deleteDoc, getDoc, enableMultiTabIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    // TAMBAHKAN IMPORT enableMultiTabIndexedDbPersistence dan getDocs
+    import { getFirestore, collection, onSnapshot, doc, setDoc, deleteDoc, getDoc, getDocs, enableMultiTabIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
     // ⚠️ PENTING: Ganti object di bawah ini dengan Konfigurasi Firebase Anda sebelum upload ke GitHub!
     let firebaseConfig = {
@@ -887,6 +894,26 @@
     window.renderAdminNilai = function() {
       let html = ''; window.appState.results.forEach((r, i) => { html += `<tr class="border-b hover:bg-slate-50 font-bold text-slate-700"><td class="p-4 md:p-5">${i+1}</td><td class="p-4 md:p-5">${r.userName}</td><td class="p-4 md:p-5"><span class="px-2 py-1 md:px-3 md:py-1 bg-slate-200 rounded-lg text-[10px] md:text-xs block mb-1">${r.paket}</span><span class="text-xs font-bold text-primary block truncate max-w-[150px]">${r.mapel || '-'}</span></td><td class="p-4 md:p-5 text-center text-success">${r.stats.benar}</td><td class="p-4 md:p-5 text-center text-danger">${r.stats.salah}</td><td class="p-4 md:p-5 text-center font-black text-lg md:text-xl text-primary">${r.nilai}</td></tr>`; });
       document.getElementById('tbody-admin-nilai').innerHTML = html || `<tr><td colspan="6" class="text-center p-8 text-slate-500 font-bold">Belum ada data nilai dari server.</td></tr>`;
+    };
+
+    window.confirmResetNilai = function() {
+      window.showConfirm("PERINGATAN!\nAnda yakin ingin mereset (menghapus) SEMUA data nilai siswa secara permanen? Aksi ini tidak dapat dikembalikan.", window.executeResetNilai);
+    };
+
+    window.executeResetNilai = async function() {
+      try {
+        const resultsRef = collection(dbStore, 'artifacts', appId, 'public', 'data', 'results');
+        const snap = await getDocs(resultsRef);
+        const deletePromises = [];
+        snap.forEach(document => {
+            deletePromises.push(deleteDoc(doc(dbStore, 'artifacts', appId, 'public', 'data', 'results', document.id)));
+        });
+        await Promise.all(deletePromises);
+        window.showAlert("Semua data rekap nilai siswa berhasil dikosongkan.");
+      } catch(e) {
+        console.error("Gagal reset nilai:", e);
+        window.showAlert("Gagal mereset data: " + e.message, "danger");
+      }
     };
 
     let editUserId = null; let activeRoleForm = 'siswa';

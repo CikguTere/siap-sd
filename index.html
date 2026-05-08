@@ -45,9 +45,20 @@
     .screen.active { display: block; }
     .flex-screen { display: none; }
     .flex-screen.active { display: flex; }
+    
+    /* Animasi Premium Tambahan */
+    .animate-blob { animation: blob 10s infinite; }
+    .animation-delay-2000 { animation-delay: 2s; }
+    .animation-delay-4000 { animation-delay: 4s; }
+    @keyframes blob {
+      0% { transform: translate(0px, 0px) scale(1); }
+      33% { transform: translate(30px, -50px) scale(1.1); }
+      66% { transform: translate(-20px, 20px) scale(0.9); }
+      100% { transform: translate(0px, 0px) scale(1); }
+    }
   </style>
 </head>
-<body class="text-slate-800 selection:bg-primary selection:text-white relative">
+<body class="text-slate-800 selection:bg-primary selection:text-white relative bg-slate-50">
 
   <!-- ======================================================================= -->
   <!-- 0. SCREEN LOADING FIREBASE -->
@@ -60,37 +71,58 @@
   </div>
 
   <!-- ======================================================================= -->
-  <!-- 1. SCREEN LOGIN -->
+  <!-- 1. SCREEN LOGIN (PROFESSIONAL CBT UI) -->
   <!-- ======================================================================= -->
-  <div id="view-login" class="flex-screen min-h-screen w-full flex-col items-center justify-center bg-gradient-to-br from-[#4A90E2] to-[#8ebcf0] p-4 relative overflow-hidden">
-    <div class="bg-white rounded-3xl shadow-2xl p-6 md:p-8 w-full max-w-md fade-in-up z-10 border-t-[6px] border-warning">
-      <div class="text-center mb-6 md:mb-8">
-        <div class="bg-[#4A90E2]/10 w-20 h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center mx-auto mb-4">
-          <i class="fas fa-book-open text-3xl md:text-4xl text-primary"></i>
+  <div id="view-login" class="flex-screen min-h-screen w-full flex-col items-center justify-center p-4 relative overflow-hidden">
+    
+    <!-- Professional CBT Background Using Provided Image URL -->
+    <div class="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat" style="background-image: url('https://github.com/user-attachments/assets/2812f89b-e500-4756-9741-8ea9a3ac5913');">
+        <!-- Overlay gelap tipis agar kotak login tetap terbaca jelas -->
+        <div class="absolute inset-0 bg-[#0A2647]/50 backdrop-blur-[2px]"></div>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] p-6 md:p-10 w-full max-w-md fade-in-up z-10 border-t-[8px] border-[#0A2647] relative">
+      <div class="text-center mb-6 md:mb-8 mt-2">
+        <div id="login-logo-container" class="bg-slate-50 w-20 h-20 md:w-24 md:h-24 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-inner border border-slate-200 overflow-hidden">
+          <i id="login-logo-icon" class="fas fa-laptop-code text-4xl md:text-5xl text-[#0A2647] drop-shadow-sm"></i>
+          <img id="login-logo-img" src="" class="w-full h-full object-contain hidden p-2" alt="Logo Sekolah" />
         </div>
-        <h1 class="text-2xl md:text-3xl font-black text-slate-800 tracking-wide uppercase">SIAP SD</h1>
-        <p class="text-xs sm:text-sm font-bold text-slate-500 uppercase tracking-widest mt-1 text-center">Sistem Informasi Asesmen Peserta Didik</p>
+        <h1 class="text-2xl md:text-3xl font-black text-[#0A2647] tracking-wide uppercase drop-shadow-sm">SIAP SD</h1>
+        <p class="text-xs sm:text-sm font-bold text-slate-500 uppercase tracking-widest mt-2 text-center">Sistem Informasi Asesmen</p>
       </div>
-      <div id="login-error" class="hidden bg-danger/10 text-danger p-3 md:p-4 rounded-xl mb-4 md:mb-6 flex items-center font-semibold text-sm md:text-base">
+      
+      <div id="login-error" class="hidden bg-danger/10 text-danger p-3 md:p-4 rounded-xl mb-4 md:mb-6 flex items-center font-semibold text-sm md:text-base border border-danger/20">
         <i class="fas fa-exclamation-circle mr-2 text-lg md:text-xl"></i> <span id="login-error-msg"></span>
       </div>
-      <form onsubmit="doLogin(event)" class="space-y-4 md:space-y-5">
+      
+      <form onsubmit="doLogin(event)" class="space-y-4 md:space-y-5 relative z-10">
         <div>
-          <label class="block text-slate-700 font-bold mb-2 text-sm md:text-lg">Username</label>
-          <input type="text" id="login-username" class="w-full bg-slate-50 border-2 border-slate-200 p-3 md:p-4 rounded-xl md:rounded-2xl text-base md:text-lg focus:border-primary outline-none transition-colors" placeholder="ketik username" required />
+          <label class="block text-slate-700 font-extrabold mb-2 text-sm md:text-base">Username</label>
+          <div class="flex shadow-sm rounded-xl">
+            <div class="w-12 flex items-center justify-center bg-slate-100 border-y-2 border-l-2 border-slate-200 rounded-l-xl text-slate-500 shrink-0">
+              <i class="fas fa-user"></i>
+            </div>
+            <input type="text" id="login-username" class="w-full bg-white border-y-2 border-r-2 border-slate-200 px-4 py-3 md:py-3.5 rounded-r-xl text-base md:text-lg focus:border-[#0A2647] focus:ring-0 outline-none transition-colors font-bold" placeholder="Ketik username..." required />
+          </div>
         </div>
         <div>
-          <label class="block text-slate-700 font-bold mb-2 text-sm md:text-lg">Password</label>
-          <input type="password" id="login-password" class="w-full bg-slate-50 border-2 border-slate-200 p-3 md:p-4 rounded-xl md:rounded-2xl text-base md:text-lg focus:border-primary outline-none transition-colors" placeholder="ketik password" required />
+          <label class="block text-slate-700 font-extrabold mb-2 text-sm md:text-base">Password</label>
+          <div class="flex shadow-sm rounded-xl">
+            <div class="w-12 flex items-center justify-center bg-slate-100 border-y-2 border-l-2 border-slate-200 rounded-l-xl text-slate-500 shrink-0">
+              <i class="fas fa-lock"></i>
+            </div>
+            <input type="password" id="login-password" class="w-full bg-white border-y-2 border-r-2 border-slate-200 px-4 py-3 md:py-3.5 rounded-r-xl text-base md:text-lg focus:border-[#0A2647] focus:ring-0 outline-none transition-colors font-bold" placeholder="Ketik password..." required />
+          </div>
         </div>
-        <button type="submit" class="btn-pro w-full bg-primary text-white font-black py-3 md:py-4 px-4 rounded-xl md:rounded-2xl text-lg md:text-xl mt-2 md:mt-4 shadow-md flex items-center justify-center gap-2 hover:bg-[#3A7BC8]">
-          MASUK SEKARANG <i class="fas fa-arrow-right"></i>
+        <button type="submit" class="w-full bg-warning hover:bg-[#e0b533] text-slate-900 font-black py-3.5 md:py-4 px-4 rounded-xl text-lg md:text-xl mt-6 shadow-lg flex items-center justify-center gap-2 border-b-4 border-[#cda224] active:border-b-0 active:translate-y-1 transition-all">
+          <i class="fas fa-sign-in-alt"></i> LOGIN
         </button>
       </form>
     </div>
-    <div class="mt-6 md:mt-10 text-slate-100 text-xs md:text-sm font-bold z-10 text-center flex flex-col items-center gap-1 pb-4">
-      <p class="opacity-90">© 2026 SIAP SD - <span class="font-black text-white">Cikgu Tere</span></p>
-      <p class="opacity-70">Versi 3.1.0 (Smart Mapel Engine)</p>
+    
+    <div class="mt-8 md:mt-10 text-warning text-xs md:text-sm font-bold z-10 text-center flex flex-col items-center gap-1 pb-4 drop-shadow-md">
+      <p>© 2026 SIAP SD <span class="mx-1 opacity-50">•</span> Versi 3.3.2 (Professional CBT UI)</p>
+      <p class="font-black mt-1">Developed by Cikgu Tere</p>
     </div>
   </div>
 
@@ -130,7 +162,7 @@
         <div id="siswa-token-error" class="hidden text-danger font-black mb-4 text-sm md:text-lg bg-danger/10 py-3 rounded-xl border border-danger/20"></div>
         <div class="mb-6 md:mb-8">
           <label class="block text-slate-700 font-black mb-3 md:mb-4 text-base md:text-xl">Masukkan Token Ujian:</label>
-          <input type="text" id="siswa-input-token" class="w-full text-center text-4xl md:text-5xl tracking-[0.3em] md:tracking-[0.5em] font-black bg-slate-50 border-4 border-slate-200 py-4 md:py-6 rounded-2xl md:rounded-3xl focus:border-success focus:bg-white outline-none transition-all uppercase placeholder:text-slate-300 placeholder:tracking-normal" placeholder="TOKEN" maxlength="6" />
+          <input type="text" id="siswa-input-token" class="w-full text-center text-3xl sm:text-4xl md:text-5xl tracking-[0.2em] md:tracking-[0.4em] font-black bg-slate-50 border-4 border-slate-200 py-4 md:py-6 px-2 rounded-2xl md:rounded-3xl focus:border-success focus:bg-white outline-none transition-all uppercase placeholder:text-slate-300 placeholder:tracking-normal" placeholder="TOKEN" maxlength="6" />
         </div>
         <button onclick="startUjian()" class="btn-pro w-full bg-success text-white hover:bg-[#219653] font-extrabold px-6 py-4 md:py-5 text-lg md:text-2xl mb-4 md:mb-6 shadow-md rounded-2xl md:rounded-3xl flex justify-center items-center gap-2"><i class="fas fa-play-circle"></i> MULAI UJIAN</button>
         <button onclick="doLogout()" class="text-slate-400 font-bold hover:text-danger hover:underline transition-all text-xs md:text-base">Bukan <span class="ui-siswa-name"></span>? Keluar</button>
@@ -193,14 +225,17 @@
           </div>
           <h2 class="text-2xl md:text-4xl font-black text-slate-800 mb-2">Ujian Selesai!</h2>
           <p id="hasil-msg" class="text-slate-500 font-bold text-sm md:text-xl mb-6 md:mb-8"></p>
-          <div class="py-6 md:py-8 border-y-2 border-slate-100 my-6 md:my-8">
+          
+          <div id="hasil-nilai-container" class="py-6 md:py-8 border-y-2 border-slate-100 my-6 md:my-8">
             <div class="text-xs md:text-sm font-black text-slate-400 uppercase tracking-[0.3em] mb-2 md:mb-4">Nilai Akhir (<span id="hasil-paket-text"></span>)</div>
             <div id="hasil-nilai-text" class="text-7xl md:text-9xl font-black drop-shadow-md"></div>
           </div>
-          <div class="grid grid-cols-2 gap-4 md:gap-6 mb-8 md:mb-10">
+          
+          <div id="hasil-stats-container" class="grid grid-cols-2 gap-4 md:gap-6 mb-8 md:mb-10">
             <div class="bg-success/10 p-4 md:p-6 rounded-2xl md:rounded-3xl border border-success/20"><div id="hasil-benar" class="text-success font-black text-3xl md:text-4xl mb-1">0</div><div class="text-slate-600 font-extrabold text-xs md:text-base">Jawaban Benar</div></div>
             <div class="bg-danger/10 p-4 md:p-6 rounded-2xl md:rounded-3xl border border-danger/20"><div id="hasil-salah" class="text-danger font-black text-3xl md:text-4xl mb-1">0</div><div class="text-slate-600 font-extrabold text-xs md:text-base">Jawaban Salah</div></div>
           </div>
+          
           <button onclick="doLogout()" class="btn-pro w-full bg-primary text-white font-extrabold px-6 py-4 md:py-5 text-base md:text-xl rounded-2xl md:rounded-3xl shadow-md"><i class="fas fa-home"></i> KEMBALI KE BERANDA</button>
         </div>
       </div>
@@ -290,8 +325,22 @@
         <!-- ADMIN UJIAN CONFIG -->
         <div id="admin-tab-ujian" class="admin-tab-content hidden fade-in-up">
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
-            <div class="bg-white rounded-2xl md:rounded-3xl shadow-sm p-6 md:p-12 text-center border border-slate-100"><div class="w-16 h-16 md:w-20 md:h-20 bg-primary/10 text-primary rounded-full flex justify-center items-center mx-auto mb-4 md:mb-6"><i class="fas fa-ticket-alt text-3xl md:text-4xl"></i></div><h3 class="text-xl md:text-2xl font-black mb-2 text-slate-800">Token Ujian Aktif</h3><p class="text-slate-500 font-bold mb-6 md:mb-8 text-sm md:text-base">Berikan token ini kepada siswa agar bisa login.</p><div id="admin-ujian-token-display" class="text-5xl md:text-7xl font-black tracking-[0.2em] text-primary bg-primary/5 py-6 md:py-8 rounded-[2rem] border-4 border-primary/20 mb-6 md:mb-8 select-all"></div><div class="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center"><button onclick="generateToken()" class="btn-pro bg-white border-2 border-slate-200 text-slate-600 px-4 md:px-6 py-3 rounded-2xl font-extrabold hover:border-primary hover:text-primary w-full sm:w-auto text-sm md:text-base"><i class="fas fa-sync"></i> Acak Token</button><button onclick="saveAdminUjian(true)" class="btn-pro bg-success text-white px-4 md:px-6 py-3 rounded-2xl font-extrabold shadow-md w-full sm:w-auto text-sm md:text-base"><i class="fas fa-broadcast-tower"></i> Rilis Sekarang</button></div></div>
-            <div class="bg-white rounded-2xl md:rounded-3xl shadow-sm p-4 md:p-6 border border-slate-100"><h3 class="text-lg md:text-xl font-black mb-4 md:mb-6 text-slate-800"><i class="fas fa-sliders-h text-primary mr-2"></i> Parameter Ujian</h3><form onsubmit="saveAdminUjian(false); return false;" class="space-y-4 md:space-y-6"><div><label class="block text-slate-700 font-extrabold mb-2 text-sm md:text-base">Paket Soal Aktif</label><select id="inp-ujian-paket" class="w-full bg-slate-50 border-2 border-slate-200 p-3 md:p-4 rounded-xl md:rounded-2xl font-bold focus:border-primary outline-none text-sm md:text-base"><option value="Tryout">Paket Tryout (40 Soal)</option><option value="Ujian">Paket Ujian (40 Soal)</option></select><p class="text-[10px] md:text-xs text-slate-500 mt-2 font-bold">*Siswa hanya akan mengerjakan soal dari paket ini.</p></div><div><label class="block text-slate-700 font-extrabold mb-2 text-sm md:text-base">Nama Ujian (Misal: PAS / UTS)</label><input type="text" id="inp-ujian-mapel" class="w-full bg-slate-50 border-2 border-slate-200 p-3 md:p-4 rounded-xl md:rounded-2xl font-bold focus:border-primary outline-none text-sm md:text-base" required /></div><div class="grid grid-cols-1 sm:grid-cols-2 gap-4"><div><label class="block text-slate-700 font-extrabold mb-2 text-sm md:text-base">Durasi (Menit)</label><input type="number" id="inp-ujian-durasi" class="w-full bg-slate-50 border-2 border-slate-200 p-3 md:p-4 rounded-xl md:rounded-2xl font-bold focus:border-primary outline-none text-sm md:text-base" required /></div><div><label class="block text-slate-700 font-extrabold mb-2 text-sm md:text-base">Jadwal Ujian</label><input type="date" id="inp-ujian-jadwal" class="w-full bg-slate-50 border-2 border-slate-200 p-3 md:p-4 rounded-xl md:rounded-2xl font-bold focus:border-primary outline-none text-sm md:text-base" required /></div></div><div class="pt-4 md:pt-6"><button type="submit" class="btn-pro w-full bg-primary text-white font-extrabold py-3 md:py-4 rounded-xl md:rounded-2xl shadow-md text-sm md:text-base"><i class="fas fa-save"></i> Simpan Pengaturan</button></div></form></div>
+            <div class="bg-white rounded-2xl md:rounded-3xl shadow-sm p-6 md:p-12 text-center border border-slate-100">
+              <div class="w-16 h-16 md:w-20 md:h-20 bg-primary/10 text-primary rounded-full flex justify-center items-center mx-auto mb-4 md:mb-6">
+                <i class="fas fa-ticket-alt text-3xl md:text-4xl"></i>
+              </div>
+              <h3 class="text-xl md:text-2xl font-black mb-2 text-slate-800">Token Ujian Aktif</h3>
+              <p class="text-slate-500 font-bold mb-6 md:mb-8 text-sm md:text-base">Berikan token ini kepada siswa agar bisa login.</p>
+              
+              <!-- TAMPILAN TOKEN DIPERBAIKI (MEMAKSA 1 BARIS) -->
+              <div id="admin-ujian-token-display" class="text-3xl sm:text-4xl md:text-5xl font-black tracking-widest text-primary bg-primary/5 py-4 md:py-6 px-4 rounded-2xl md:rounded-[2rem] border-4 border-primary/20 mb-6 md:mb-8 select-all whitespace-nowrap overflow-hidden text-center text-ellipsis"></div>
+              
+              <div class="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
+                <button onclick="generateToken()" class="btn-pro bg-white border-2 border-slate-200 text-slate-600 px-4 md:px-6 py-3 rounded-2xl font-extrabold hover:border-primary hover:text-primary w-full sm:w-auto text-sm md:text-base"><i class="fas fa-sync"></i> Acak Token</button>
+                <button onclick="saveAdminUjian(true)" class="btn-pro bg-success text-white px-4 md:px-6 py-3 rounded-2xl font-extrabold shadow-md w-full sm:w-auto text-sm md:text-base"><i class="fas fa-broadcast-tower"></i> Rilis Sekarang</button>
+              </div>
+            </div>
+            <div class="bg-white rounded-2xl md:rounded-3xl shadow-sm p-4 md:p-6 border border-slate-100"><h3 class="text-lg md:text-xl font-black mb-4 md:mb-6 text-slate-800"><i class="fas fa-sliders-h text-primary mr-2"></i> Parameter Ujian</h3><form onsubmit="saveAdminUjian(false); return false;" class="space-y-4 md:space-y-6"><div><label class="block text-slate-700 font-extrabold mb-2 text-sm md:text-base">Paket Soal Aktif</label><select id="inp-ujian-paket" class="w-full bg-slate-50 border-2 border-slate-200 p-3 md:p-4 rounded-xl md:rounded-2xl font-bold focus:border-primary outline-none text-sm md:text-base"><option value="Tryout">Paket Tryout (40 Soal)</option><option value="Ujian">Paket Ujian (40 Soal)</option></select><p class="text-[10px] md:text-xs text-slate-500 mt-2 font-bold">*Siswa hanya akan mengerjakan soal dari paket ini.</p></div><div><label class="block text-slate-700 font-extrabold mb-2 text-sm md:text-base">Mata Pelajaran Diaktifkan</label><select id="inp-ujian-mapel" class="w-full bg-slate-50 border-2 border-slate-200 p-3 md:p-4 rounded-xl md:rounded-2xl font-bold focus:border-primary outline-none text-sm md:text-base cursor-pointer"><option value="Pendidikan Agama Katolik dan Budi Pekerti">Pendidikan Agama Katolik dan Budi Pekerti</option><option value="Pendidikan Pancasila">Pendidikan Pancasila</option><option value="Bahasa Indonesia">Bahasa Indonesia</option><option value="Matematika">Matematika</option><option value="IPAS">IPAS</option><option value="Seni Teater">Seni Teater</option><option value="PJOK">PJOK</option></select></div><div class="grid grid-cols-1 sm:grid-cols-2 gap-4"><div><label class="block text-slate-700 font-extrabold mb-2 text-sm md:text-base">Durasi (Menit)</label><input type="number" id="inp-ujian-durasi" class="w-full bg-slate-50 border-2 border-slate-200 p-3 md:p-4 rounded-xl md:rounded-2xl font-bold focus:border-primary outline-none text-sm md:text-base" required /></div><div><label class="block text-slate-700 font-extrabold mb-2 text-sm md:text-base">Jadwal Ujian</label><input type="date" id="inp-ujian-jadwal" class="w-full bg-slate-50 border-2 border-slate-200 p-3 md:p-4 rounded-xl md:rounded-2xl font-bold focus:border-primary outline-none text-sm md:text-base" required /></div></div><div class="pt-4 md:pt-6"><button type="submit" class="btn-pro w-full bg-primary text-white font-extrabold py-3 md:py-4 rounded-xl md:rounded-2xl shadow-md text-sm md:text-base"><i class="fas fa-save"></i> Simpan Pengaturan</button></div></form></div>
           </div>
         </div>
         <!-- ADMIN NILAI -->
@@ -304,7 +353,28 @@
         <!-- ADMIN PENGATURAN -->
         <div id="admin-tab-pengaturan" class="admin-tab-content hidden fade-in-up">
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-4">
-            <div class="bg-white rounded-2xl md:rounded-3xl p-4 md:p-6 shadow-sm border border-slate-100"><h3 class="text-lg md:text-xl font-black mb-4 md:mb-6 text-slate-800"><i class="fas fa-school text-primary mr-2"></i> Identitas Sekolah</h3><div class="space-y-4"><div><label class="block text-slate-700 font-extrabold mb-2 text-sm md:text-base">Nama Sekolah</label><input type="text" id="inp-set-sekolah" class="w-full bg-slate-50 border-2 border-slate-200 p-3 md:p-4 rounded-xl font-bold focus:border-primary outline-none text-sm md:text-base" /></div><div><label class="block text-slate-700 font-extrabold mb-2 text-sm md:text-base">Tahun Ajaran</label><input type="text" id="inp-set-tahun" class="w-full bg-slate-50 border-2 border-slate-200 p-3 md:p-4 rounded-xl font-bold focus:border-primary outline-none text-sm md:text-base" /></div><div><label class="block text-slate-700 font-extrabold mb-2 text-sm md:text-base">Kepala Sekolah</label><input type="text" id="inp-set-kepsek" class="w-full bg-slate-50 border-2 border-slate-200 p-3 md:p-4 rounded-xl font-bold focus:border-primary outline-none text-sm md:text-base" /></div></div></div>
+            <div class="bg-white rounded-2xl md:rounded-3xl p-4 md:p-6 shadow-sm border border-slate-100"><h3 class="text-lg md:text-xl font-black mb-4 md:mb-6 text-slate-800"><i class="fas fa-school text-primary mr-2"></i> Identitas Sekolah</h3><div class="space-y-4">
+              <div><label class="block text-slate-700 font-extrabold mb-2 text-sm md:text-base">Nama Sekolah</label><input type="text" id="inp-set-sekolah" class="w-full bg-slate-50 border-2 border-slate-200 p-3 md:p-4 rounded-xl font-bold focus:border-primary outline-none text-sm md:text-base" /></div>
+              <div><label class="block text-slate-700 font-extrabold mb-2 text-sm md:text-base">Tahun Ajaran</label><input type="text" id="inp-set-tahun" class="w-full bg-slate-50 border-2 border-slate-200 p-3 md:p-4 rounded-xl font-bold focus:border-primary outline-none text-sm md:text-base" /></div>
+              <div><label class="block text-slate-700 font-extrabold mb-2 text-sm md:text-base">Kepala Sekolah</label><input type="text" id="inp-set-kepsek" class="w-full bg-slate-50 border-2 border-slate-200 p-3 md:p-4 rounded-xl font-bold focus:border-primary outline-none text-sm md:text-base" /></div>
+              
+              <div class="pt-2">
+                <label class="block text-slate-700 font-extrabold mb-2 text-sm md:text-base">Logo Sekolah (Tampil di Menu Login)</label>
+                <div class="flex items-center gap-3 md:gap-4 p-3 border-2 border-dashed border-slate-300 rounded-xl bg-slate-50">
+                  <div id="preview-logo-admin-box" class="w-16 h-16 bg-white rounded-xl border border-slate-200 flex items-center justify-center overflow-hidden shrink-0 shadow-sm">
+                    <img id="img-preview-logo" src="" class="w-full h-full object-contain hidden p-1" />
+                    <i id="icon-preview-logo" class="fas fa-image text-slate-400 text-2xl"></i>
+                  </div>
+                  <div class="flex-1 flex flex-col gap-2 overflow-hidden">
+                    <input type="text" id="inp-set-logo" oninput="updateLogoPreview()" class="w-full bg-white border border-slate-200 p-2 rounded-lg font-bold focus:border-primary outline-none text-xs md:text-sm" placeholder="Paste URL Logo..." />
+                    <div class="flex items-center gap-2">
+                      <span class="font-bold text-slate-500 text-[10px] md:text-xs">Atau Upload:</span>
+                      <input type="file" accept="image/*" onchange="handleImageUpload(this, 'inp-set-logo', 'img-preview-logo'); setTimeout(window.updateLogoPreview, 200);" class="text-[10px] md:text-xs font-bold text-slate-500 file:bg-primary/10 file:text-primary file:rounded-lg file:border-0 file:px-2 file:py-1 cursor-pointer w-full" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div></div>
             <div class="bg-white rounded-2xl md:rounded-3xl p-4 md:p-6 shadow-sm border border-slate-100"><h3 class="text-lg md:text-xl font-black mb-4 md:mb-6 text-slate-800"><i class="fas fa-shield-alt text-primary mr-2"></i> Kebijakan Sistem</h3><div class="space-y-4 md:space-y-6"><div class="flex items-center justify-between p-3 md:p-4 bg-slate-50 rounded-xl border-2 border-slate-100"><div><h4 class="font-bold text-slate-800 text-sm md:text-lg">Tampilkan Nilai</h4><p class="text-xs md:text-sm text-slate-500 font-bold">Siswa melihat nilai setelah ujian.</p></div><input type="checkbox" id="inp-set-tampilnilai" class="w-5 h-5 md:w-6 md:h-6 accent-success" /></div><div class="flex items-center justify-between p-3 md:p-4 bg-slate-50 rounded-xl border-2 border-slate-100"><div><h4 class="font-bold text-slate-800 text-sm md:text-lg">Mode Ujian Ketat</h4><p class="text-xs md:text-sm text-slate-500 font-bold">Cegah siswa pindah tab.</p></div><input type="checkbox" id="inp-set-ketat" class="w-5 h-5 md:w-6 md:h-6 accent-success" /></div></div></div>
           </div>
           <div class="flex justify-end mt-4"><button onclick="saveAdminSettings()" class="btn-pro w-full md:w-auto bg-primary text-white font-extrabold px-6 md:px-10 py-3 md:py-4 rounded-xl md:rounded-2xl shadow-md text-sm md:text-base"><i class="fas fa-save"></i> Simpan Semua Pengaturan</button></div>
@@ -436,7 +506,7 @@
       <form onsubmit="saveEditSoal(event)" class="space-y-4 md:space-y-6">
         <div class="bg-warning/10 border border-warning/30 p-3 md:p-4 rounded-xl md:rounded-2xl flex flex-col sm:flex-row items-start sm:items-center gap-2 md:gap-4 w-full">
           <div class="flex-1 w-full"><label class="font-black text-slate-800 text-sm md:text-base mb-1 block">Ubah Paket:</label><select id="edit-soal-paket" class="w-full bg-white border-2 border-warning/50 rounded-xl px-3 py-1.5 md:px-4 md:py-2 focus:border-warning outline-none font-bold text-sm md:text-base"><option value="Tryout">Paket Tryout</option><option value="Ujian">Paket Ujian</option></select></div>
-          <div class="flex-1 w-full"><label class="font-black text-slate-800 text-sm md:text-base mb-1 block">Mapel Anda:</label><select id="edit-soal-mapel" class="w-full bg-slate-200 border-2 border-slate-300 rounded-xl px-3 py-1.5 md:px-4 md:py-2 outline-none font-bold text-sm md:text-base text-slate-600 cursor-not-allowed" disabled></select></div>
+          <div class="flex-1 w-full"><label class="font-black text-slate-800 text-sm md:text-base mb-1 block">Ubah Mapel:</label><select id="edit-soal-mapel" class="w-full bg-white border-2 border-warning/50 rounded-xl px-3 py-1.5 md:px-4 md:py-2 focus:border-warning outline-none font-bold text-sm md:text-base"><option value="Pendidikan Agama Katolik dan Budi Pekerti">Pendidikan Agama Katolik dan Budi Pekerti</option><option value="Pendidikan Pancasila">Pendidikan Pancasila</option><option value="Bahasa Indonesia">Bahasa Indonesia</option><option value="Matematika">Matematika</option><option value="IPAS">IPAS</option><option value="Seni Teater">Seni Teater</option><option value="PJOK">PJOK</option></select></div>
         </div>
         <div><label class="block font-black text-slate-700 mb-2 md:mb-3 text-sm md:text-lg">Pertanyaan Soal</label><textarea id="edit-soal-pertanyaan" required class="w-full bg-slate-50 border-2 border-slate-200 rounded-xl md:rounded-2xl p-3 md:p-5 focus:border-warning outline-none h-24 md:h-32 font-bold text-sm md:text-lg resize-none"></textarea></div>
         <div class="p-3 md:p-4 border-2 border-dashed border-slate-300 rounded-xl md:rounded-2xl bg-slate-50"><label class="block font-black text-slate-700 mb-2 md:mb-3 text-sm md:text-lg"><i class="fas fa-image text-slate-400 mr-2"></i> Ubah Gambar</label><div class="flex flex-col gap-3 md:gap-4"><input type="text" id="edit-soal-gambar-url" oninput="updatePreview('edit-soal-gambar-url', 'edit-preview-img')" class="w-full bg-white border-2 border-slate-200 rounded-lg md:rounded-xl p-2.5 md:p-3 focus:border-warning outline-none font-bold text-sm md:text-base" placeholder="Paste URL..." /><div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 md:gap-4"><span class="font-bold text-slate-500 text-xs md:text-sm">ATAU UPLOAD</span><input type="file" accept="image/*" onchange="handleImageUpload(this, 'edit-soal-gambar-url', 'edit-preview-img')" class="block w-full text-xs md:text-sm font-bold text-slate-500 file:bg-warning/20 file:text-warning file:rounded-lg md:file:rounded-xl file:border-0 file:px-3 file:py-1.5 md:file:px-4 md:file:py-2" /></div></div><div id="edit-preview-img-cont" class="mt-3 md:mt-4 border-2 border-slate-200 rounded-xl p-2 bg-white inline-block relative hidden"><button type="button" onclick="document.getElementById('edit-soal-gambar-url').value=''; updatePreview('edit-soal-gambar-url', 'edit-preview-img')" class="absolute -top-3 -right-3 w-6 h-6 md:w-8 md:h-8 bg-danger text-white rounded-full font-bold shadow-md text-xs md:text-base"><i class="fas fa-times"></i></button><img id="edit-preview-img" src="" class="max-h-24 md:max-h-32 rounded-lg" /></div></div>
@@ -465,7 +535,8 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
     import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import { getFirestore, collection, onSnapshot, doc, setDoc, deleteDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    // TAMBAHKAN IMPORT enableMultiTabIndexedDbPersistence
+    import { getFirestore, collection, onSnapshot, doc, setDoc, deleteDoc, getDoc, enableMultiTabIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
     // ⚠️ PENTING: Ganti object di bawah ini dengan Konfigurasi Firebase Anda sebelum upload ke GitHub!
     let firebaseConfig = {
@@ -489,11 +560,24 @@
     const dbStore = getFirestore(app);
     const appId = typeof __app_id !== 'undefined' ? __app_id : 'siap-sd-app';
 
+    // --- AKTIFKAN FITUR ANTI-PUTUS (OFFLINE PERSISTENCE) ---
+    try {
+        enableMultiTabIndexedDbPersistence(dbStore).catch((err) => {
+            if (err.code == 'failed-precondition') {
+                console.warn("Aplikasi terbuka di banyak tab, mode offline hanya aktif di tab utama.");
+            } else if (err.code == 'unimplemented') {
+                console.warn("Browser ini tidak mendukung fitur offline database.");
+            }
+        });
+    } catch (e) {
+        console.error("Gagal mengaktifkan cache offline:", e);
+    }
+
     // --- GLOBAL STATE ---
     window.appState = {
         users: [], soal: [], results: [],
         ujianSet: { token: 'SD2026', durasi: 90, mapel: 'Asesmen Akhir SD', jadwal: '2026-05-15', paketAktif: 'Tryout' },
-        settings: { namaSekolah: 'SD Negeri 1 Cerdas', tahunAjaran: '2025/2026', kepalaSekolah: 'Bpk. Ahmad Dahlan, M.Pd', tampilkanNilai: false, modeKetat: true },
+        settings: { namaSekolah: 'SD Negeri 1 Cerdas', tahunAjaran: '2025/2026', kepalaSekolah: 'Bpk. Ahmad Dahlan, M.Pd', tampilkanNilai: false, modeKetat: true, logoSekolah: '' },
         isLoaded: false
     };
 
@@ -528,7 +612,8 @@
     function checkGlobalLoad() {
         if (loadedFlags.users && loadedFlags.soal && loadedFlags.results && loadedFlags.ujian && loadedFlags.settings && !window.appState.isLoaded) {
             window.appState.isLoaded = true;
-            if (document.getElementById('view-loading').classList.contains('active')) {
+            const viewLoading = document.getElementById('view-loading');
+            if (viewLoading && viewLoading.classList.contains('active')) {
                 window.showScreen('view-login');
             }
         }
@@ -545,7 +630,7 @@
         const testDoc = await getDoc(doc(configRef, 'ujian'));
         if (!testDoc.exists()) {
             const defUsers = [
-                { id: "1", username: 'admin1', password: 'password', role: 'admin', name: 'Admin Utama', status: 'aktif' },
+                { id: "1", username: 'admin', password: 'admin123', role: 'admin', name: 'Admin Utama', status: 'aktif' },
                 { id: "2", username: 'guru1', password: 'password', role: 'guru', name: 'Bapak Budi', status: 'aktif', mapel: 'Bahasa Indonesia' },
                 { id: "3", username: 'siswa1', password: 'password', role: 'siswa', name: 'Andi Saputra', status: 'aktif' }
             ];
@@ -555,6 +640,34 @@
             // Default soal dummy 
             setDoc(doc(soalRef, 'S-Tryout-1'), { id: 'S-Tryout-1', paket: 'Tryout', mapel: 'Bahasa Indonesia', pertanyaan: 'Apa sinonim dari kata "Pintar"?', gambar: '', opsi_a: 'Bodoh', opsi_b: 'Pandai', opsi_c: 'Jelek', opsi_d: 'Rajin', jawaban_benar: 'B' });
         }
+
+        // ----------------------------------------------------------------------
+        // AUTO RESTORE: DATA GURU MATEMATIKA (DANIEL FALLO) & 5 SOAL
+        // ----------------------------------------------------------------------
+        try {
+            const guruID = "guru_daniel_fallo";
+            const checkGuru = await getDoc(doc(usersRef, guruID));
+            
+            // Pastikan akun Guru selalu ada
+            if(!checkGuru.exists()) {
+                setDoc(doc(usersRef, guruID), { id: guruID, username: 'danielfallo11@guru.sd.belajar.id', password: 'password', role: 'guru', name: 'Daniel Fallo', status: 'aktif', mapel: 'Matematika' });
+            }
+            
+            // Pastikan 5 Soal Matematika selalu ada di Bank Soal
+            const soalList = [
+                { id: 'S-MTK-RESTORE-1', paket: 'Tryout', mapel: 'Matematika', pertanyaan: 'Berapakah hasil dari 25 + 15?', gambar: '', opsi_a: '30', opsi_b: '40', opsi_c: '50', opsi_d: '60', jawaban_benar: 'B' },
+                { id: 'S-MTK-RESTORE-2', paket: 'Ujian', mapel: 'Matematika', pertanyaan: 'Berapakah hasil dari 10 x 5?', gambar: '', opsi_a: '20', opsi_b: '30', opsi_c: '40', opsi_d: '50', jawaban_benar: 'D' },
+                { id: 'S-MTK-RESTORE-3', paket: 'Tryout', mapel: 'Matematika', pertanyaan: 'Jika sebuah persegi memiliki panjang sisi 5 cm, berapakah luas persegi tersebut?', gambar: '', opsi_a: '10 cm²', opsi_b: '20 cm²', opsi_c: '25 cm²', opsi_d: '30 cm²', jawaban_benar: 'C' },
+                { id: 'S-MTK-RESTORE-4', paket: 'Ujian', mapel: 'Matematika', pertanyaan: 'Berapakah hasil pembagian dari 100 : 4?', gambar: '', opsi_a: '25', opsi_b: '30', opsi_c: '40', opsi_d: '50', jawaban_benar: 'A' },
+                { id: 'S-MTK-RESTORE-5', paket: 'Tryout', mapel: 'Matematika', pertanyaan: 'Faktor Persekutuan Terbesar (FPB) dari 12 dan 18 adalah...', gambar: '', opsi_a: '3', opsi_b: '6', opsi_c: '9', opsi_d: '12', jawaban_benar: 'B' }
+            ];
+            
+            for(let s of soalList) {
+                const sDoc = await getDoc(doc(soalRef, s.id));
+                if(!sDoc.exists()) setDoc(doc(soalRef, s.id), s);
+            }
+        } catch(e) { console.error("Gagal restore data guru:", e); }
+        // ----------------------------------------------------------------------
 
         // Live Listeners (Real-time sync on ANY device)
         onSnapshot(usersRef, snap => { 
@@ -583,7 +696,13 @@
 
     // Fungsi Utama Penjaga Real-time (Sangat Akurat)
     function refreshUI(type) {
-        if (!currentUser) return;
+        if (!currentUser) {
+            // Jika di halaman login, terapkan logo
+            if(type === 'settings' && document.getElementById('view-login').classList.contains('active')) {
+                window.applyLogoToLogin();
+            }
+            return;
+        }
         if (currentUser.role === 'admin') {
             if (type === 'users') { window.renderAdminPeserta(); window.renderAdminGuru(); window.renderAdminDashboard(); }
             if (type === 'results') { window.renderAdminNilai(); window.renderAdminDashboard(); }
@@ -670,7 +789,7 @@
       } else { document.getElementById('login-error').classList.remove('hidden'); document.getElementById('login-error-msg').innerText = 'Username atau Password salah!'; }
     };
 
-    window.doLogout = function() { currentUser = null; if(timerInterval) clearInterval(timerInterval); window.showScreen('view-login'); };
+    window.doLogout = function() { currentUser = null; if(timerInterval) clearInterval(timerInterval); window.showScreen('view-login'); window.applyLogoToLogin(); };
 
     function initRole() {
       if(currentUser.role === 'admin') {
@@ -704,7 +823,47 @@
       if(tab === 'dashboard') window.renderAdminDashboard(); if(tab === 'peserta') window.renderAdminPeserta(); if(tab === 'guru') window.renderAdminGuru();
       if(tab === 'ujian') { document.getElementById('admin-ujian-token-display').innerText = window.appState.ujianSet.token; document.getElementById('inp-ujian-paket').value = window.appState.ujianSet.paketAktif; document.getElementById('inp-ujian-mapel').value = window.appState.ujianSet.mapel; document.getElementById('inp-ujian-durasi').value = window.appState.ujianSet.durasi; document.getElementById('inp-ujian-jadwal').value = window.appState.ujianSet.jadwal; }
       if(tab === 'nilai') window.renderAdminNilai();
-      if(tab === 'pengaturan') { document.getElementById('inp-set-sekolah').value = window.appState.settings.namaSekolah; document.getElementById('inp-set-tahun').value = window.appState.settings.tahunAjaran; document.getElementById('inp-set-kepsek').value = window.appState.settings.kepalaSekolah; document.getElementById('inp-set-tampilnilai').checked = window.appState.settings.tampilkanNilai; document.getElementById('inp-set-ketat').checked = window.appState.settings.modeKetat; }
+      if(tab === 'pengaturan') { 
+          document.getElementById('inp-set-sekolah').value = window.appState.settings.namaSekolah || ''; 
+          document.getElementById('inp-set-tahun').value = window.appState.settings.tahunAjaran || ''; 
+          document.getElementById('inp-set-kepsek').value = window.appState.settings.kepalaSekolah || ''; 
+          document.getElementById('inp-set-tampilnilai').checked = window.appState.settings.tampilkanNilai; 
+          document.getElementById('inp-set-ketat').checked = window.appState.settings.modeKetat;
+          
+          // Render Logo di menu Pengaturan
+          const inpLogo = document.getElementById('inp-set-logo');
+          if(inpLogo) {
+              inpLogo.value = window.appState.settings.logoSekolah || '';
+              window.updateLogoPreview();
+          }
+      }
+    };
+
+    window.updateLogoPreview = function() {
+        const val = document.getElementById('inp-set-logo').value;
+        const img = document.getElementById('img-preview-logo');
+        const icon = document.getElementById('icon-preview-logo');
+        if(val) {
+            img.src = val; img.classList.remove('hidden'); icon.classList.add('hidden');
+        } else {
+            img.classList.add('hidden'); icon.classList.remove('hidden');
+        }
+    };
+
+    window.applyLogoToLogin = function() {
+        const logoUrl = window.appState.settings.logoSekolah;
+        const imgLogin = document.getElementById('login-logo-img');
+        const iconLogin = document.getElementById('login-logo-icon');
+        if(imgLogin && iconLogin) {
+            if(logoUrl) {
+                imgLogin.src = logoUrl;
+                imgLogin.classList.remove('hidden');
+                iconLogin.classList.add('hidden');
+            } else {
+                imgLogin.classList.add('hidden');
+                iconLogin.classList.remove('hidden');
+            }
+        }
     };
 
     window.renderAdminDashboard = function() {
@@ -756,8 +915,18 @@
       setDoc(doc(dbStore, 'artifacts', appId, 'public', 'data', 'configs', 'ujian'), newData).then(() => window.showAlert(rilisBtn ? 'Token & Paket Aktif Diperbarui!' : 'Pengaturan Ujian disimpan!'));
     };
     window.saveAdminSettings = function() {
-      const newData = { namaSekolah: document.getElementById('inp-set-sekolah').value, tahunAjaran: document.getElementById('inp-set-tahun').value, kepalaSekolah: document.getElementById('inp-set-kepsek').value, tampilkanNilai: document.getElementById('inp-set-tampilnilai').checked, modeKetat: document.getElementById('inp-set-ketat').checked };
-      setDoc(doc(dbStore, 'artifacts', appId, 'public', 'data', 'configs', 'settings'), newData).then(() => window.showAlert('Pengaturan Sistem disimpan!'));
+      const newData = { 
+          namaSekolah: document.getElementById('inp-set-sekolah').value, 
+          tahunAjaran: document.getElementById('inp-set-tahun').value, 
+          kepalaSekolah: document.getElementById('inp-set-kepsek').value, 
+          tampilkanNilai: document.getElementById('inp-set-tampilnilai').checked, 
+          modeKetat: document.getElementById('inp-set-ketat').checked,
+          logoSekolah: document.getElementById('inp-set-logo').value
+      };
+      setDoc(doc(dbStore, 'artifacts', appId, 'public', 'data', 'configs', 'settings'), newData).then(() => {
+          window.showAlert('Pengaturan Sistem & Logo disimpan!');
+          window.applyLogoToLogin();
+      });
     };
 
     // --- GURU ---
@@ -904,12 +1073,42 @@
       const detailJawaban = activeSiswaSoal.map((soal, idx) => { const ans = answers[idx]; if(!ans || !ans.jawaban) k++; else { if(ans.ragu) r++; if(ans.jawaban === soal.jawaban_benar) b++; else s++; } return { id: soal.id, no: idx+1, pertanyaan: soal.pertanyaan, jawabanBenar: soal.jawaban_benar, jawabanSiswa: ans?.jawaban || '-', isCorrect: ans?.jawaban === soal.jawaban_benar }; });
       const nilai = Math.round((b / activeSiswaSoal.length) * 100);
       const res = { userId: currentUser.id, userName: currentUser.name, paket: window.appState.ujianSet.paketAktif, mapel: window.currentUjianMapel, nilai, stats: { benar:b, salah:s, kosong:k, raguCount:r }, detailJawaban };
-      setDoc(doc(dbStore, 'artifacts', appId, 'public', 'data', 'results', String(currentUser.id + '_' + res.paket + '_' + res.mapel.replace(/\s+/g,'_'))), res).then(() => window.showSiswaHasil(res));
+      
+      // Kirim Data (Akan ditampung oleh Cache secara offline jika internet mati)
+      setDoc(doc(dbStore, 'artifacts', appId, 'public', 'data', 'results', String(currentUser.id + '_' + res.paket + '_' + res.mapel.replace(/\s+/g,'_'))), res)
+        .catch(err => console.log("Menunggu koneksi internet untuk sinkronisasi hasil..."));
+      
+      // Siswa langsung dipindahkan ke layar Hasil tanpa perlu menunggu konfirmasi server
+      window.showSiswaHasil(res);
     };
 
     window.showSiswaHasil = function(res) {
-      document.getElementById('siswa-step-ujian').classList.remove('active'); document.getElementById('siswa-step-hasil').classList.add('active');
-      const isL = res.nilai >= 70; document.getElementById('hasil-icon-box').className = `w-20 h-20 md:w-28 md:h-28 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6 shadow-xl text-white ${isL ? 'bg-success shadow-success/40' : 'bg-warning shadow-warning/40'}`; document.getElementById('hasil-icon').className = `fas text-4xl md:text-[56px] ${isL ? 'fa-trophy' : 'fa-star'}`; document.getElementById('hasil-msg').innerText = isL ? 'Luar biasa! Kamu mendapatkan nilai yang sangat bagus.' : 'Kerja bagus! Jangan menyerah dan belajar lebih giat lagi ya.'; document.getElementById('hasil-paket-text').innerText = `${res.paket} - ${res.mapel}`; document.getElementById('hasil-nilai-text').innerText = window.appState.settings.tampilkanNilai ? res.nilai : 'Rahasia'; document.getElementById('hasil-nilai-text').className = `text-7xl md:text-9xl font-black drop-shadow-md ${isL ? 'text-success' : 'text-primary'}`; document.getElementById('hasil-benar').innerText = window.appState.settings.tampilkanNilai ? res.stats.benar : '?'; document.getElementById('hasil-salah').innerText = window.appState.settings.tampilkanNilai ? res.stats.salah : '?';
+      document.getElementById('siswa-step-ujian').classList.remove('active'); 
+      document.getElementById('siswa-step-hasil').classList.add('active');
+      
+      const isL = res.nilai >= 70; 
+      
+      if (window.appState.settings.tampilkanNilai) {
+          document.getElementById('hasil-icon-box').className = `w-20 h-20 md:w-28 md:h-28 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6 shadow-xl text-white ${isL ? 'bg-success shadow-success/40' : 'bg-warning shadow-warning/40'}`; 
+          document.getElementById('hasil-icon').className = `fas text-4xl md:text-[56px] ${isL ? 'fa-trophy' : 'fa-star'}`; 
+          document.getElementById('hasil-msg').innerText = isL ? 'Luar biasa! Kamu mendapatkan nilai yang sangat bagus.' : 'Kerja bagus! Jangan menyerah dan belajar lebih giat lagi ya.'; 
+          
+          document.getElementById('hasil-nilai-container').classList.remove('hidden');
+          document.getElementById('hasil-stats-container').classList.remove('hidden');
+          
+          document.getElementById('hasil-paket-text').innerText = `${res.paket} - ${res.mapel}`; 
+          document.getElementById('hasil-nilai-text').innerText = res.nilai; 
+          document.getElementById('hasil-nilai-text').className = `text-7xl md:text-9xl font-black drop-shadow-md ${isL ? 'text-success' : 'text-primary'}`; 
+          document.getElementById('hasil-benar').innerText = res.stats.benar; 
+          document.getElementById('hasil-salah').innerText = res.stats.salah;
+      } else {
+          document.getElementById('hasil-icon-box').className = `w-20 h-20 md:w-28 md:h-28 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6 shadow-xl text-white bg-primary shadow-primary/40`; 
+          document.getElementById('hasil-icon').className = `fas text-4xl md:text-[56px] fa-check`; 
+          document.getElementById('hasil-msg').innerText = 'Jawaban kamu telah berhasil disimpan di sistem. Silakan kembali ke Beranda.';
+          
+          document.getElementById('hasil-nilai-container').classList.add('hidden');
+          document.getElementById('hasil-stats-container').classList.add('hidden');
+      }
     };
 
     // --- UTILS EXPORT ---
